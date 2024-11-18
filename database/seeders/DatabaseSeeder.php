@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'super@gmail.com',
             'password' => 'password'
         ]);
+
+        $this->call(StudentSeeder::class);
     }
 }
