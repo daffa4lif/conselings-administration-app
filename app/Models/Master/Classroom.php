@@ -12,4 +12,9 @@ class Classroom extends Model
     protected $guarded = [
         'id'
     ];
+
+    public function student()
+    {
+        return $this->hasMany(\App\Models\StudentsClassroom::class, 'student_id');
+    }
 }
