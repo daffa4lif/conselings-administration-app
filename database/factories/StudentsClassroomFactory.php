@@ -17,7 +17,7 @@ class StudentsClassroomFactory extends Factory
     public function definition(): array
     {
         return [
-            'student_id' => \App\Models\Master\Student::factory(),
+            'student_id' => \App\Models\Master\Student::inRandomOrder()->first()->id,
             'classroom_id' => \App\Models\Master\Classroom::inRandomOrder()->first()->id,
             'year' => fake()->randomElement([2012, 2013, 2014, 2015, 2016, 2017])
         ];
