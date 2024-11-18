@@ -11,12 +11,7 @@
     @stack('style')
 </head>
 <body>
-
-    @include('includes.navbar')
-
-    <div class="mt-20">
-        @yield('body')
-    </div>
+    @yield('body')
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     @stack('script')
