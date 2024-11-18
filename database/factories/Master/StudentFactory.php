@@ -19,6 +19,7 @@ class StudentFactory extends Factory
         return [
             'nis' => fake()->unique()->numberBetween(10000, 90000),
             'name' => fake()->name(),
+            'gender' => fake()->randomElement(['PRIA', 'WANITA']),
             'address' => fake()->address()
         ];
     }

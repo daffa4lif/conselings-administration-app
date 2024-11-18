@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('nis')->unique();
             $table->string('name');
+            $table->enum('gender', ['PRIA', 'WANITA']);
             $table->text('address');
             $table->timestamps();
         });
