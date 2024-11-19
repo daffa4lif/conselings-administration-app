@@ -71,6 +71,8 @@ class StudentController extends Controller
             ]);
 
             return back()->with('success', 'data spreadsheet berhasil diolah');
+        } catch (\App\Exceptions\SpreadsheetException $spx) {
+            return back()->withErrors('tamplate upload tidak sesuai');
         } catch (\Throwable $th) {
             return self::redirectResponseServerError();
         }
