@@ -14,10 +14,10 @@
     <form method="POST">
         @csrf
         <div class="mb-5">
-            <x-basic-label for="jurusan" title="Jurusan" />
-            <select name="jurusan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                <option @selected(old('jurusan', $classroom->major) == 'IPA')>IPA</option>
-                <option @selected(old('jurusan', $classroom->major) == 'IPS')>IPS</option>
+            <x-basic-label for="major" title="Tipe Kelas" />
+            <select name="major" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option @selected(old('major', $classroom->major) == 'IPA')>IPA</option>
+                <option @selected(old('major', $classroom->major) == 'IPS')>IPS</option>
             </select>
         </div>
         <div class="mb-5">
