@@ -62,5 +62,18 @@
                 @endforelse
             </tbody>
         </table>
+
+    </div>
+    <div class="flex items-center gap-3 mt-4">
+        <p class="text-sm">Per Page</p>
+        <select name="filter" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-1" wire:model.change="perPage">
+            <option>10</option>
+            <option>50</option>
+            <option>100</option>
+        </select>
+    </div>
+
+    <div class="mt-5 sm:flex sm:justify-end">
+        {{ $absents->links() }}
     </div>
 </div>
