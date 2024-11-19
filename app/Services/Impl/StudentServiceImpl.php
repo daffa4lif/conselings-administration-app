@@ -121,13 +121,10 @@ class StudentServiceImpl implements StudentService
             foreach ($datas as $data) {
                 $student = Student::with("classroom")->where('nis', (int) $data['2'])->first();
 
-                if ($student) {
-                    if ($student->classroom->count() >= 1) {
+                if ($student->exists()) {
+                    if ($student->classroom->count() > 0) {
                         foreach ($student->classroom as $studentClassroom) {
-                            if (
-                                $classroom->pivot->year == $year or
-                                ($studentClassroom->major == $classroom->major && $studentClassroom->nama == $classroom->nama && $studentClassroom->pivot->year == $year)
-                            ) {
+                            if ($studentClassroom->classroom_id == $classroom->id && $studentClassroom->year == $year) {
                                 $reports['error']['duplicate'][] = $data;
                             } else {
                                 \App\Models\StudentsClassroom::create([
