@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,12 +21,10 @@ Route::middleware(['auth'])->group(function () {
         return view('index');
     });
 
-    Route::prefix('dashboard')->group(function () {
-        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::prefix('students')->group(function () {
+        Route::get('/', [StudentController::class, 'index'])->name('student.index');
+        Route::get('/{nis}', [StudentController::class, 'detail'])->name('student.detail');
 
-        Route::prefix('profile')->group(function () {
-            Route::get('/', [UserProfileController::class, 'index'])->name('profile.index');
-            Route::post('/', [UserProfileController::class, 'update']);
-        });
+        Route::post('/{nis}/new-classroom', [StudentController::class, 'createNewClassroomPost'])->name('student.create-new-classroom');
     });
 });
