@@ -90,6 +90,7 @@
 
 <section class="w-full p-4 border border-gray-100 shadow rounded-lg mt-5">
     <h2 class="text-xl font-medium mb-2">Riwayat Ketidakhadiran</h2>
+    @livewire('student.list-absent', ['lazy' => true, 'id' => $student->id])
 
 </section>
 @endsection
