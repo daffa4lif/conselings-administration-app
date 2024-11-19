@@ -85,51 +85,7 @@
         </div>
     </div> 
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-            <thead class="text-xs text-gray-700 uppercase bg-green-100">
-                <tr>
-                    <th scope="col" class="px-6 py-3">
-                        Tahun
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Kelas
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Jurusan
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {{-- @forelse ($siswa->kelas as $key => $item)
-                    <tr class="bg-white border-b hover:bg-gray-50">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            {{ $item->pivot->tahun }}
-                        </th>
-                        <td class="px-6 py-4">
-                            {{ $item['nama'] }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item['jurusan'] }}
-                        </td>
-                        <td class="px-6 py-4">
-                            0
-                        </td>
-                        <td class="px-6 py-4 text-right">
-                            <a href="{{ route('master.kelas.delete-siswa', ['id' => $item['id'], 'relasi_id' => $item->pivot->id]) }}" class="font-medium text-red-600 hover:underline">Delete</a>
-                        </td>
-                    </tr>
-                @empty
-                <tr>
-                    <td colspan="6" class="px-6 py-4 text-center">tidak ada data kelas</td>
-                </tr>
-                @endforelse --}}
-            </tbody>
-        </table>
-    </div>
+    @livewire('student.list-classroom', ['lazy' => true, 'id' => $student->id])
 </section>
 
 <section class="w-full p-4 border border-gray-100 shadow rounded-lg mt-5">

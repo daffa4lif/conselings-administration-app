@@ -26,5 +26,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{nis}', [StudentController::class, 'detail'])->name('student.detail');
 
         Route::post('/{nis}/new-classroom', [StudentController::class, 'createNewClassroomPost'])->name('student.create-new-classroom');
+        Route::get('/delete-classroom/{id_student}/{id_class}/{year}', [StudentController::class, 'deleteClassroom'])->name('student.delete-classroom');
     });
 });

@@ -18,4 +18,9 @@ class Student extends Model
     {
         return $this->hasMany(\App\Models\StudentsClassroom::class, 'classroom_id');
     }
+
+    public function absent(): HasMany
+    {
+        return $this->hasMany(\App\Models\Absent::class, 'student_id');
+    }
 }
