@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    private static function redirectResponseServerError()
-    {
-        return back()->with('error', 'server error. coba lagi nanti!');
-    }
-
     private static function redirectResponseStudentNotFond()
     {
         return back()->withErrors('data siswa tidak ditemukan');
@@ -21,6 +16,35 @@ class StudentController extends Controller
     public function index()
     {
         return view("pages.student.index");
+    }
+
+    public function create()
+    {
+        return view("pages.student.create");
+    }
+
+    public function createPost(Request $request)
+    {
+        $request->validate([
+            'nis' => ['required', 'numeric', "unique:students,nis"],
+            'name' => ['required', 'max:255', 'min:2'],
+            'gender' => ['required', 'in:PRIA,WANITA'],
+            'address' => ['required', 'string']
+        ]);
+
+        try {
+
+            $student = Student::create([
+                'nis' => $request->input('nis'),
+                'name' => $request->input('name'),
+                'gender' => $request->input('gender'),
+                'address' => $request->input('address'),
+            ]);
+
+            return redirect()->route('student.detail', $student->nis)->with('success', 'berhasil menambah data siswa baru');
+        } catch (\Throwable $th) {
+            return self::redirectResponseServerError();
+        }
     }
 
     public function detail($nis)

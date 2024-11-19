@@ -28,7 +28,7 @@
                     <div class="p-4 md:p-5 space-y-4">
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ratione.</p>
                         <div class="grid grid-cols-2 gap-5">
-                            <a href="#" class="w-full border border-gray-100 hover:border-gray-300 shadow h-36 sm:h-64 rounded-lg flex justify-center items-center">
+                            <a href="{{ route('student.create') }}" class="w-full border border-gray-100 hover:border-gray-300 shadow h-36 sm:h-64 rounded-lg flex justify-center items-center">
                                 <div class="text-gray-500 text-center">
                                     <i class="fa-regular fa-square-plus text-xl sm:text-[3rem]"></i>
                                     <p class="mt-2 font-bold">Create</p>
