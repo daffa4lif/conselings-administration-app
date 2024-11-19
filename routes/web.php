@@ -33,4 +33,20 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/{nis}/new-classroom', [StudentController::class, 'createNewClassroomPost'])->name('student.create-new-classroom');
         Route::get('/delete-classroom/{id_student}/{id_class}/{year}', [StudentController::class, 'deleteClassroom'])->name('student.delete-classroom');
     });
+
+    Route::prefix("file")->group(function () {
+        Route::post('upload', function (\Illuminate\Http\Request $request, \App\Services\FileUploadService $fileUploadService) {
+            $upload = $fileUploadService->uploadTemp($request);
+
+            return !$upload ? response()->json(status: 400, data: [
+                'status' => 'error',
+                'message' => 'file failed to upload'
+            ]) : $upload;
+        })->name('file.upload');
+        Route::delete('revert', function (\Illuminate\Http\Request $request, \App\Services\FileUploadService $fileUploadService) {
+            $revert = $fileUploadService->revertTemp($request);
+
+            return $revert;
+        })->name('file.revert');
+    });
 });
