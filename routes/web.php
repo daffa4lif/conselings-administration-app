@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserProfileController;
@@ -32,6 +33,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{nis}', [StudentController::class, 'detail'])->name('student.detail');
         Route::post('/{nis}/new-classroom', [StudentController::class, 'createNewClassroomPost'])->name('student.create-new-classroom');
         Route::get('/delete-classroom/{id_student}/{id_class}/{year}', [StudentController::class, 'deleteClassroom'])->name('student.delete-classroom');
+    });
+
+    Route::prefix('classroom')->group(function () {
+        Route::get('/', [ClassroomController::class, 'index'])->name('classroom.index');
+        Route::post('/', [ClassroomController::class, 'createPost']);
+
+        Route::get('/{id}', [ClassroomController::class, 'detail'])->name('classroom.detail');
+        Route::post('/{id}', [ClassroomController::class, 'detailPost']);
     });
 
     Route::prefix("file")->group(function () {
