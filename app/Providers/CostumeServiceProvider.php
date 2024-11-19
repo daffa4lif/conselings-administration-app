@@ -13,6 +13,8 @@ class CostumeServiceProvider extends ServiceProvider
     {
         $this->app->bind(\App\Services\FileUploadService::class, \App\Services\Impl\FileUploadServiceImpl::class);
         $this->app->bind(\App\Services\FileService::class, \App\Services\Impl\FileServiceImpl::class);
+        $this->app->bind(\App\Services\SpreadsheetService::class, \App\Services\Impl\SpreadsheetServiceImpl::class);
+        $this->app->bind(\App\Services\StudentService::class, \App\Services\Impl\StudentServiceImpl::class);
     }
 
     /**
