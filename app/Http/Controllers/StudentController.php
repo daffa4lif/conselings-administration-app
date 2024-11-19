@@ -43,7 +43,7 @@ class StudentController extends Controller
         ]);
 
         $student = Student::where('nis', $nis)->firstOr(function () {
-            self::redirectResponseStudentNotFond();
+            return self::redirectResponseStudentNotFond();
         });
 
         try {
@@ -55,7 +55,7 @@ class StudentController extends Controller
 
             return back()->with('success', 'berhasil mengubah data siswa');
         } catch (\Throwable $th) {
-            return back()->with('error', "server error. coba lagi nanti!");
+            return self::redirectResponseServerError();
         }
     }
 
@@ -67,7 +67,7 @@ class StudentController extends Controller
         ]);
 
         $student = Student::where('nis', $nis)->firstOr(function () {
-            self::redirectResponseStudentNotFond();
+            return self::redirectResponseStudentNotFond();
         });
 
         try {
@@ -79,19 +79,19 @@ class StudentController extends Controller
 
             return back()->with('success', 'berhasil menambahkan data siswa ke kelas');
         } catch (\Throwable $th) {
-            self::redirectResponseServerError();
+            return self::redirectResponseServerError();
         }
     }
 
-    public function deleteClassroom($nis, $idClassroom, $year)
+    public function deleteClassroom($idSiswa, $idClassroom, $year)
     {
 
         if (!is_numeric($year)) {
             return back()->withErrors('tahun hanya boleh angka');
         }
 
-        $student = Student::where('nis', $nis)->firstOr(function () {
-            self::redirectResponseStudentNotFond();
+        $student = Student::where('id', $idSiswa)->firstOr(function () {
+            return self::redirectResponseStudentNotFond();
         });
 
         try {
@@ -107,7 +107,7 @@ class StudentController extends Controller
 
             return back()->with('success', 'berhasil menghapus kelas dari siswa');
         } catch (\Throwable $th) {
-            self::redirectResponseServerError();
+            return self::redirectResponseServerError();
         }
     }
 }
