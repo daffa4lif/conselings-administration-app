@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 
 class FileUploadServiceImpl implements FileUploadService
 {
+    private const TEMP_PATH = "temp/";
+
     public function uploadTemp(\Illuminate\Http\Request $request): bool|string
     {
         // return false;
@@ -26,7 +28,7 @@ class FileUploadServiceImpl implements FileUploadService
                     $folder = rand();
                     $file   = \Illuminate\Support\Str::random() . "-" . $item->getClientOriginalName();
 
-                    Storage::disk("public")->putFileAs(FileServiceImpl::TEMP_PATH . $folder, $item, $file);
+                    Storage::disk("public")->putFileAs(self::TEMP_PATH . $folder, $item, $file);
 
                     FileTemp::create([
                         'folder' => $folder,
@@ -42,14 +44,9 @@ class FileUploadServiceImpl implements FileUploadService
             if ($request->hasFile($key)) {
                 $folder = rand();
 
-                logDebug('masuk disini');
                 $file = \Illuminate\Support\Str::random() . "-" . $request->file($key)->getClientOriginalName();
 
-                logDebug('file masuk', [
-                    $request->file($key)
-                ]);
-
-                Storage::disk("local")->putFileAs(FileServiceImpl::TEMP_PATH . $folder, $request->file($key), $file);
+                Storage::disk("local")->putFileAs(self::TEMP_PATH . $folder, $request->file($key), $file);
 
                 FileTemp::create([
                     'folder' => $folder,
@@ -67,7 +64,7 @@ class FileUploadServiceImpl implements FileUploadService
     public function revertTemp(\Illuminate\Http\Request $request): bool
     {
         $temp = FileTemp::where('folder', $request->getContent())->first();
-        Storage::disk('local')->deleteDirectory(FileServiceImpl::TEMP_PATH . $request->getContent());
+        Storage::disk('local')->deleteDirectory(self::TEMP_PATH . $request->getContent());
         $temp->delete();
 
         return true;
