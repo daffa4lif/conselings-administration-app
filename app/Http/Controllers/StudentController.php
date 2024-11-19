@@ -47,6 +47,35 @@ class StudentController extends Controller
         }
     }
 
+    public function upload()
+    {
+        // jika ada hasil reports sebelumnya
+        $reports = session(auth()->user()->id . "-upload-siswa") ?? null;
+
+        session()->forget(auth()->user()->id . "-upload-siswa");
+
+        return view("pages.student.upload", compact("reports"));
+    }
+
+    public function uploadPost(Request $request, \App\Services\StudentService $studentService)
+    {
+        $request->validate([
+            'fileSiswa' => ['required']
+        ]);
+
+        try {
+            $reports = $studentService->createNewStudentsBySpreadsheetTemp($request->input(key: 'fileSiswa'));
+
+            session([
+                auth()->user()->id . "-upload-siswa" => $reports
+            ]);
+
+            return back()->with('success', 'data spreadsheet berhasil diolah');
+        } catch (\Throwable $th) {
+            return self::redirectResponseServerError();
+        }
+    }
+
     public function detail($nis)
     {
         $student    = Student::where('nis', $nis)->firstOrFail();

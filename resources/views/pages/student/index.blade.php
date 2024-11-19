@@ -34,7 +34,7 @@
                                     <p class="mt-2 font-bold">Create</p>
                                 </div>
                             </a>
-                            <a href="#" class="w-full border border-gray-100 hover:border-gray-300 shadow h-36 sm:h-64 rounded-lg flex justify-center items-center">
+                            <a href="{{ route('student.upload') }}" class="w-full border border-gray-100 hover:border-gray-300 shadow h-36 sm:h-64 rounded-lg flex justify-center items-center">
                                 <div class="text-gray-500 text-center">
                                     <i class="fa-solid fa-upload text-xl sm:text-[3rem]"></i>
                                     <p class="mt-2 font-bold">Upload</p>

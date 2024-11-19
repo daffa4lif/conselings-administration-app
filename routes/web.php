@@ -26,6 +26,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/create', [StudentController::class, 'create'])->name('student.create');
         Route::post('/create', [StudentController::class, 'createPost']);
 
+        Route::get('/upload', [StudentController::class, 'upload'])->name('student.upload');
+        Route::post('/upload', [StudentController::class, 'upload']);
+
         Route::get('/{nis}', [StudentController::class, 'detail'])->name('student.detail');
         Route::post('/{nis}/new-classroom', [StudentController::class, 'createNewClassroomPost'])->name('student.create-new-classroom');
         Route::get('/delete-classroom/{id_student}/{id_class}/{year}', [StudentController::class, 'deleteClassroom'])->name('student.delete-classroom');
