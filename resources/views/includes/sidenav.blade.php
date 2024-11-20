@@ -9,7 +9,7 @@
                     </svg>
                 </button>
                 <a href="/" class="flex ms-2 md:me-24">
-                    <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap">Tamplate</span>
+                    <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap">Bimbingan Konseling</span>
                 </a>
             </div>
             <div class="flex items-center">
@@ -59,8 +59,26 @@
                 </a>
             </li> --}}
             <li>
+                <a href="{{ route('student.index') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                    <i class="fa-solid fa-user w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"></i>
+                    <span class="ms-3">Siswa</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('classroom.index') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                    <i class="fa-solid fa-landmark w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"></i>
+                    <span class="ms-3">Kelas</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('classroom.index') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                    <i class="fa-solid fa-house-user w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"></i>
+                    <span class="ms-3">Kunjungan Siswa</span>
+                </a>
+            </li>
+            <li>
                 <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-                    <i class="fa-solid fa-file-invoice text-gray-500 text-2xl"></i>
+                    <i class="fa-solid fa-file-invoice w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"></i>
                     <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Dropdown</span>
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
