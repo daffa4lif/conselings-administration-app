@@ -60,13 +60,38 @@ class ClassroomController extends Controller
 
     public function registerStudentByUpload($id)
     {
+        // jika ada hasil reports sebelumnya
+        $reports = session(auth()->user()->id . "-upload-siswa-kelas") ?? null;
 
+        session()->forget(auth()->user()->id . "-upload-siswa-kelas");
+
+        return view("pages.classroom.upload", compact("id", "reports"));
     }
 
-    public function registerStudentByUploadPost($id, Request $request)
+    public function registerStudentByUploadPost($id, Request $request, \App\Services\StudentService $studentService)
     {
         $request->validate([
-
+            'fileSiswa' => 'required',
+            "year" => ["required", "string", "max:4", "min:4"]
         ]);
+
+        $classroom = Classroom::findOr($id, function () {
+            return back()->withErrors('data kelas tidak ditemukan');
+        });
+
+        try {
+            $reports = $studentService->registerStudentsClassroom($request->input("fileSiswa"), $classroom, $request->input("year"));
+
+            session([
+                auth()->user()->id . "-upload-siswa-kelas" => $reports
+            ]);
+
+            return back()->with('success', 'data berhasil diolah');
+        } catch (\App\Exceptions\SpreadsheetException $spx) {
+            return back()->withErrors('file upload tidak sesuai tamplate');
+        } catch (\Throwable $th) {
+            dd($th);
+            return self::redirectResponseServerError();
+        }
     }
 }

@@ -36,7 +36,7 @@
     <h2 class="font-medium text-xl">Data Siswa</h2>
     <p class="text-sm mb-4">Data siswa pada kelas</p>
     <div class="flex justify-end">
-        <a href="#" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+        <a href="{{ route('classroom.upload', $classroom->id) }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
             Tambah
         </a>
     </div>
