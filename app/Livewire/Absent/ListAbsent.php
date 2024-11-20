@@ -28,6 +28,9 @@ class ListAbsent extends Component
                         ->orWhere('name', 'like', "%$this->search%");
                 });
             })
+            ->when($this->filterType != 'All', function ($query) {
+                $query->where('type', $this->filterType);
+            })
             ->when($this->filterOrder == 'new', function ($query) {
                 $query->orderByDesc('violation_date');
             }, function ($query) {
