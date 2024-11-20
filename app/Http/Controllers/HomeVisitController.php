@@ -41,9 +41,9 @@ class HomeVisitController extends Controller
 
     public function detail($id)
     {
-        $homeVisit = HomeVisit::with('student')->findOrFail($id);
+        $visits = HomeVisit::with('student')->findOrFail($id);
 
-        return view("pages.home-visit.detail", compact("homeVisit"));
+        return view("pages.home-visit.detail", compact("visits"));
     }
 
     public function detailPost($id, Request $request)
@@ -52,7 +52,7 @@ class HomeVisitController extends Controller
             'parent' => ['required', 'string', 'max:255', 'min:2'],
             'case' => ['required', 'string', 'max:255', 'min:2'],
             'status' => ['required', 'in:PROCESS,FINISH'],
-            'solution' => ['required_if:status,FINISH', 'min:5']
+            'solution' => ['required_if:status,FINISH']
         ]);
 
         $homeVisit = HomeVisit::findOr($id, function () {
@@ -63,7 +63,7 @@ class HomeVisitController extends Controller
             $homeVisit->parent_name = $request->input('parent');
             $homeVisit->case        = $request->input('case');
             $homeVisit->status      = $request->input('status');
-            $homeVisit->solution    = $request->input('solution');
+            $homeVisit->solution    = $request->input('solution') ?? null;
             $homeVisit->save();
 
             return back()->with('success', 'berhasil menyimpan data');

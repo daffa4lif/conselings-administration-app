@@ -26,8 +26,12 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix("home-visits")->group(function () {
         Route::get('/', [HomeVisitController::class, 'index'])->name('home-visit.index');
         Route::get('/create', [HomeVisitController::class, 'create'])->name('home-visit.create');
+        Route::post('/create', [HomeVisitController::class, 'createPost']);
 
         Route::get('/{id}', [HomeVisitController::class, 'detail'])->name('home-visit.detail');
+        Route::post('/{id}', [HomeVisitController::class, 'detailPost']);
+
+        Route::get('/{id}/delete', [HomeVisitController::class, 'delete'])->name('home-visit.delete');
     });
 
     Route::prefix('students')->group(function () {
@@ -72,3 +76,6 @@ Route::middleware(['auth'])->group(function () {
         })->name('file.revert');
     });
 });
+
+// Is Not Secure for production
+Route::get('/api/students', [StudentController::class, "searchStudents"])->name("student.api.search");

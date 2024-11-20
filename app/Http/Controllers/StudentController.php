@@ -165,4 +165,23 @@ class StudentController extends Controller
             return self::redirectResponseServerError();
         }
     }
+
+    public function searchStudents(Request $request)
+    {
+        if ($request->has('search')) {
+            $students = Student::where('name', 'like', "%$request->search%")
+                ->orWhere('nis', 'like', "%$request->search%")
+                ->limit(10)
+                ->get();
+
+            $students = $students->map(function ($student) {
+                return [
+                    "id" => $student->id,
+                    "name" => "$student->nis | $student->name"
+                ];
+            });
+
+            return response()->json($students);
+        }
+    }
 }
