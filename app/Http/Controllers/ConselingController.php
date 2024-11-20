@@ -32,7 +32,7 @@ class ConselingController extends Controller
                 'user_id' => auth()->user()->id
             ]);
 
-            return redirect()->route('absent.detail', $conseling->id)->with('success', 'berhasil membuat data baru');
+            return redirect()->route('conseling.detail', $conseling->id)->with('success', 'berhasil membuat data baru');
         } catch (\Throwable $th) {
             return self::redirectResponseServerError();
         }
