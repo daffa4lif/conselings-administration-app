@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\DashboardController;
@@ -58,6 +59,21 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/{id}/upload-students', [ClassroomController::class, 'registerStudentByUploadPost']);
 
         Route::get('delete/{id}', [ClassroomController::class, 'delete'])->name('classroom.delete');
+    });
+
+    Route::prefix("absents")->group(function () {
+        Route::get("/", [AbsentController::class, "index"])->name("absent.index");
+        Route::get("/create", [AbsentController::class, "create"])->name("absent.create");
+        Route::post("/create", [AbsentController::class, "createPost"]);
+
+        Route::get("/upload", [AbsentController::class, "upload"])->name("absent.upload");
+        Route::post("/upload", [AbsentController::class, "uploadPost"]);
+
+        Route::get("/{id}", [AbsentController::class, "detail"])->name("absent.detail");
+        Route::post("/{id}", [AbsentController::class, "detailPost"]);
+
+        Route::get("/{id}/delete", [AbsentController::class, "delete"])->name("absent.delete");
+
     });
 
     Route::prefix("file")->group(function () {
