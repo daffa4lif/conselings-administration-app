@@ -26,12 +26,31 @@ class AbsentController extends Controller
     {
         $absent = Absent::with('student')->findOrFail($id);
 
-        return view("pages.absent.detail");
+        return view("pages.absent.detail", compact("absent"));
     }
 
-    public function detailPost()
+    public function detailPost($id, Request $request)
     {
+        $request->validate([
+            'date' => ['required', 'date'],
+            'type' => ['required', 'in:IZIN,SAKIT,ALPHA'],
+            'description' => ['required', 'min:3'],
+        ]);
 
+        $absent = Absent::with('student')->findOr($id, function () {
+            return back()->withErrors('data absent tidak ditemukan');
+        });
+
+        try {
+            $absent->type           = $request->input('type');
+            $absent->violation_date = $request->input('date');
+            $absent->description    = $request->input('description');
+            $absent->save();
+
+            return back()->with('success', 'berhasil mengubah data');
+        } catch (\Throwable $th) {
+            return self::redirectResponseServerError();
+        }
     }
 
     public function upload()
@@ -46,6 +65,10 @@ class AbsentController extends Controller
 
     public function delete($id)
     {
+        $absent = Absent::findOr($id, function () {
+            return back()->withErrors('data absent tidak ditemukan');
+        })->delete();
 
+        return redirect()->route('absent.index')->with('success', 'data berhasil dihapus');
     }
 }
