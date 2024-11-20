@@ -41,7 +41,7 @@
         </a>
     </div>
 
-    
+    @livewire('classroom.list-students', ['lazy' => true, 'id' => $classroom->id])
 </section>
 
 <section class="w-full p-4 border border-gray-100 shadow rounded-lg mt-5">
