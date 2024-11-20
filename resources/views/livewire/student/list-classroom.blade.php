@@ -33,7 +33,7 @@
                     </td>
                     <td class="px-6 py-4">
                         <p>Absen : {{ $item->absentTotal }}</p>
-                        <p>Kasus : 0</p>
+                        <p>Kasus : {{ $item->homeVisitTotal }}</p>
                     </td>
                     <td class="px-6 py-4 text-right">
                         <a href="{{ route('student.delete-classroom', ['id_student' => $id, 'id_class' => $item->classroom->id, 'year' => $item->year]) }}" class="font-medium text-red-600 hover:underline">Delete</a>
