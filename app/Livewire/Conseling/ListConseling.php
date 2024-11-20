@@ -31,9 +31,9 @@ class ListConseling extends Component
                 $query->where('status', $this->filterStatus);
             })
             ->when($this->filterOrder == 'new', function ($query) {
-                $query->orderBy('created_at');
-            }, function ($query) {
                 $query->orderByDesc('created_at');
+            }, function ($query) {
+                $query->orderBy('created_at');
             })
             ->paginate($this->perPage);
 
