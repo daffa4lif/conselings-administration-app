@@ -73,5 +73,7 @@ class ConselingController extends Controller
         Conseling::findOr($id, function () {
             return back()->withErrors('data conseling tidak ditemukan');
         })->delete();
+
+        return redirect()->route('conseling.index')->with('success', 'berhasil menghapus data');
     }
 }
