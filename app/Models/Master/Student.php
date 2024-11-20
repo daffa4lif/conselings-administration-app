@@ -16,7 +16,7 @@ class Student extends Model
 
     public function classroom(): HasMany
     {
-        return $this->hasMany(\App\Models\StudentsClassroom::class, 'classroom_id');
+        return $this->hasMany(\App\Models\StudentsClassroom::class, 'student_id');
     }
 
     public function absent(): HasMany
