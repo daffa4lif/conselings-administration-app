@@ -94,4 +94,13 @@ class ClassroomController extends Controller
             return self::redirectResponseServerError();
         }
     }
+
+    public function delete($id)
+    {
+        Classroom::findOr($id, function () {
+            return back()->withErrors('data kelas tidak ditemukan');
+        })->delete();
+
+        return redirect()->route('classroom.index')->with('success', 'berhasil menghapus data kelas');
+    }
 }

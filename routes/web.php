@@ -44,6 +44,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/{id}/upload-students', [ClassroomController::class, 'registerStudentByUpload'])->name('classroom.upload');
         Route::post('/{id}/upload-students', [ClassroomController::class, 'registerStudentByUploadPost']);
+
+        Route::get('delete/{id}', [ClassroomController::class, 'delete'])->name('classroom.delete');
     });
 
     Route::prefix("file")->group(function () {

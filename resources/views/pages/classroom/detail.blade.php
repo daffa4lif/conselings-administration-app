@@ -70,7 +70,7 @@
             confirmButtonText: "Yes, delete it!"
             }).then((result) => {
             if (result.isConfirmed) {
-                window.location = "#"
+                window.location = "{{ route('classroom.delete', $classroom->id) }}"
             }
         });
     })
