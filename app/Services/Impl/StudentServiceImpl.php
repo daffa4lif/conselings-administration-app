@@ -121,33 +121,31 @@ class StudentServiceImpl implements StudentService
             foreach ($datas as $data) {
                 $student = Student::with("classroom")->where('nis', (int) $data['2'])->first();
 
-                if ($student->exists()) {
-                    if ($student->classroom->count() > 0) {
-                        foreach ($student->classroom as $studentClassroom) {
-                            if ($studentClassroom->classroom_id == $classroom->id && $studentClassroom->year == $year) {
-                                $reports['error']['duplicate'][] = $data;
-                            } else {
-                                \App\Models\StudentsClassroom::create([
-                                    "student_id" => $student->id,
-                                    "classroom_id" => $classroom->id,
-                                    "year" => $year
-                                ]);
-
-                                $reports['create'][] = $data;
-                            }
-                        }
-                    } else {
-                        \App\Models\StudentsClassroom::create([
-                            "student_id" => $student->id,
-                            "classroom_id" => $classroom->id,
-                            "year" => $year
-                        ]);
-
-                        $reports['create'][] = $data;
-                    }
-                } else {
-                    $reports['error']['unknow'][] = $data;
+                // jika data siswa tidak ditemukan pada database
+                if (!$student) {
+                    $reports['error']['unknown'][] = $data;
+                    continue;
                 }
+
+                // jika data siswa double dalam database
+                if ($student->classroom()->where(['classroom_id' => $classroom->id, 'year' => $year])->exists()) {
+                    $reports['error']['duplicate'][] = $data;
+                    continue;
+                }
+
+                // jika ada data yang tahun ajarannya sama
+                if ($student->classroom()->where('year', $year)->exists()) {
+                    $reports['error']['same'][] = $data;
+                    continue;
+                }
+
+                // buat data baru
+                $student->classroom()->create([
+                    'classroom_id' => $classroom->id,
+                    'year' => $year
+                ]);
+
+                $reports['create'][] = $data;
             }
 
             DB::commit();
