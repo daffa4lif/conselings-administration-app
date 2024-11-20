@@ -22,7 +22,8 @@ class ConselingFactory extends Factory
             'student_id' => \App\Models\Master\Student::inRandomOrder()->first()->id,
             'case' => fake()->paragraph(1),
             'status' => $decission ? 'FINISH' : 'PROCESS',
-            'solution' => $decission ? fake()->paragraph() : null
+            'solution' => $decission ? fake()->paragraph() : null,
+            'user_id' => \App\Models\User::inRandomOrder()->first()->id
         ];
     }
 }
