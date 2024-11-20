@@ -12,8 +12,6 @@ class ListClassroom extends Component
 
     public string $search = '';
 
-    public string $filterOrder = 'name';
-
     public string $filterMajor = 'All';
 
     public $perPage = 10;
