@@ -3,6 +3,7 @@
 use App\Http\Controllers\AbsentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\ConselingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeVisitController;
 use App\Http\Controllers\StudentController;
@@ -74,6 +75,17 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get("/{id}/delete", [AbsentController::class, "delete"])->name("absent.delete");
 
+    });
+
+    Route::prefix("conselings")->group(function () {
+        Route::get('/', [ConselingController::class, 'index'])->name('conseling.index');
+        Route::get('/create', [ConselingController::class, 'create'])->name('conseling.create');
+        Route::post('/create', [ConselingController::class, 'createPost']);
+
+        Route::get('/{id}', [ConselingController::class, 'detail'])->name('conseling.detail');
+        Route::post('/{id}', [ConselingController::class, 'detailPost']);
+
+        Route::get('/{id}/delete', [ConselingController::class, 'delete'])->name('conseling.delete');
     });
 
     Route::prefix("file")->group(function () {
