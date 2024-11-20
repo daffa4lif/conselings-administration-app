@@ -15,7 +15,7 @@
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                         <h3 class="text-xl font-semibold text-gray-900">
-                            Tambah Data Siswa
+                            Tambah Data Absent
                         </h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="default-modal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -28,7 +28,7 @@
                     <div class="p-4 md:p-5 space-y-4">
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ratione.</p>
                         <div class="grid grid-cols-2 gap-5">
-                            <a href="{{ route('student.create') }}" class="w-full border border-gray-100 hover:border-gray-300 shadow h-36 sm:h-64 rounded-lg flex justify-center items-center">
+                            <a href="{{ route('absent.create') }}" class="w-full border border-gray-100 hover:border-gray-300 shadow h-36 sm:h-64 rounded-lg flex justify-center items-center">
                                 <div class="text-gray-500 text-center">
                                     <i class="fa-regular fa-square-plus text-xl sm:text-[3rem]"></i>
                                     <p class="mt-2 font-bold">Create</p>

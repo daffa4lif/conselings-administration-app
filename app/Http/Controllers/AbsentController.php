@@ -14,12 +14,31 @@ class AbsentController extends Controller
 
     public function create()
     {
-        return view("pages.absent.index");
+        return view("pages.absent.create");
     }
 
     public function createPost(Request $request)
     {
+        $request->validate([
+            'studentId' => ['required', 'exists:students,id'],
+            'date' => ['required', 'date'],
+            'type' => ['required', 'in:IZIN,SAKIT,ALPHA'],
+            'description' => ['required', 'min:3'],
+        ]);
 
+        try {
+            $absent = Absent::create([
+                'student_id' => $request->input('studentId'),
+                'type' => $request->input('type'),
+                'violation_date' => $request->input('date'),
+                'description' => $request->input('description'),
+                'user_id' => auth()->user()->id
+            ]);
+
+            return redirect()->route('absent.detail', $absent->id)->with('success', 'data berhasil dibuat');
+        } catch (\Throwable $th) {
+            return self::redirectResponseServerError();
+        }
     }
 
     public function detail($id)
