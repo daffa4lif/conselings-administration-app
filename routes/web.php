@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeVisitController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/', function () {
         return view('index');
+    });
+
+    Route::prefix("home-visits")->group(function () {
+        Route::get('/', [HomeVisitController::class, 'index'])->name('home-visit.index');
+        Route::get('/create', [HomeVisitController::class, 'create'])->name('home-visit.create');
+
+        Route::get('/{id}', [HomeVisitController::class, 'detail'])->name('home-visit.detail');
     });
 
     Route::prefix('students')->group(function () {
