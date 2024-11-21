@@ -74,12 +74,36 @@ class AbsentController extends Controller
 
     public function upload()
     {
-        return view("pages.absent.upload");
+        // jika ada hasil reports sebelumnya
+        $reports = session()->get(auth()->user()->id . "-upload-absent") ?? [];
+
+        if (session()->exists(auth()->user()->id . "-upload-absent")) {
+            session()->forget(auth()->user()->id . "-upload-absent");
+        }
+
+        return view("pages.absent.upload", compact("reports"));
     }
 
-    public function uploadPost(Request $request)
+    public function uploadPost(Request $request, \App\Services\AbsentService $absentService)
     {
+        $request->validate([
+            'date' => ['required', 'date'],
+            'fileAbsent' => 'required'
+        ]);
 
+
+        try {
+            $reports = $absentService->createNewAbsentsBySpreadsheetTemp($request->input('fileAbsent'), $request->input('date'));
+
+            session([
+                auth()->user()->id . "-upload-absent" => $reports
+            ]);
+
+            return back()->with('success', 'data berhasil diolah');
+        } catch (\Throwable $th) {
+            dd($th);
+            return self::redirectResponseServerError();
+        }
     }
 
     public function delete($id)
