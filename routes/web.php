@@ -7,6 +7,7 @@ use App\Http\Controllers\ConselingController;
 use App\Http\Controllers\ConselingGrupController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeVisitController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
@@ -98,6 +99,18 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/{id}', [ConselingGrupController::class, 'detailPost']);
 
         Route::get('/{id}/delete', [ConselingGrupController::class, 'delete'])->name('conseling-group.delete');
+    });
+
+    Route::prefix("reports")->group(function () {
+        Route::prefix("absents")->group(function () {
+            Route::get('/', [ReportController::class, "indexAbsents"])->name("report.absent");
+            Route::get('/print', [ReportController::class, "printAbsents"])->name("report.absent.print");
+        });
+
+        Route::prefix("home-visits")->group(function () {
+            Route::get('/', [ReportController::class, "indexHomeVisits"])->name("report.visit");
+            Route::get('/print', [ReportController::class, "printHomeVisits"])->name("report.visit.print");
+        });
     });
 
     Route::prefix("file")->group(function () {
