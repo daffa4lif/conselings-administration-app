@@ -4,6 +4,7 @@ use App\Http\Controllers\AbsentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ConselingController;
+use App\Http\Controllers\ConselingGrupController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeVisitController;
 use App\Http\Controllers\StudentController;
@@ -86,6 +87,17 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/{id}', [ConselingController::class, 'detailPost']);
 
         Route::get('/{id}/delete', [ConselingController::class, 'delete'])->name('conseling.delete');
+    });
+
+    Route::prefix("conselings-group")->group(function () {
+        Route::get('/', [ConselingGrupController::class, 'index'])->name('conseling-group.index');
+        Route::get('/create', [ConselingGrupController::class, 'create'])->name('conseling-group.create');
+        Route::post('/create', [ConselingGrupController::class, 'createPost']);
+
+        Route::get('/{id}', [ConselingGrupController::class, 'detail'])->name('conseling-group.detail');
+        Route::post('/{id}', [ConselingGrupController::class, 'detailPost']);
+
+        Route::get('/{id}/delete', [ConselingGrupController::class, 'delete'])->name('conseling-group.delete');
     });
 
     Route::prefix("file")->group(function () {

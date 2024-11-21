@@ -4,7 +4,8 @@ namespace App\Models\Conseling;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 
 class ConselingGroup extends Model
 {
@@ -14,8 +15,9 @@ class ConselingGroup extends Model
         'id'
     ];
 
-    public function student(): BelongsTo
+    public function students(): BelongsToMany
     {
-        return $this->belongsTo(\App\Models\Master\Student::class, "student_id");
+        return $this->belongsToMany(\App\Models\Master\Student::class, "conseling_student", "student_id", "conseling_group_id")
+            ->using(ConselingStudents::class);
     }
 }
