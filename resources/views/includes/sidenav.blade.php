@@ -83,9 +83,26 @@
                 </a>
             </li>
             <li>
+                <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100" aria-controls="dropdown-conselings" data-collapse-toggle="dropdown-conselings">
+                    <i class="fa-solid fa-book w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"></i>
+                    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Konseling</span>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                    </svg>
+                </button>
+                <ul id="dropdown-conselings" class="hidden py-2 space-y-2">
+                    <li>
+                        <a href="{{ route('conseling.index') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Konseling Individu</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('conseling-group.index') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Konseling Grup</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
                 <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
                     <i class="fa-solid fa-file-invoice w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"></i>
-                    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Dropdown</span>
+                    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Rekap Laporan</span>
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                     </svg>
