@@ -7,6 +7,7 @@ use App\Services\AbsentService;
 use App\Services\FileService;
 use App\Services\SpreadsheetService;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class AbsentServiceImpl implements AbsentService
 {
@@ -61,32 +62,39 @@ class AbsentServiceImpl implements AbsentService
         try {
 
             // get all students id
-            $students   = \App\Models\Master\Student::whereIn('nis', array_column($datas, '2'))->get();
-            $studentMap = $students->keyBy('nis');
+            $students    = \App\Models\Master\Student::whereIn('nis', array_column($datas, '2'))->get();
+            $studentMap  = $students->keyBy('nis');
+            $tipeAllowed = ['IZIN', 'SAKIT', 'ALPHA'];
 
             foreach ($datas as $data) {
 
                 // jika terdapat data yang kosong pada 1 baris tersebut
-                if (in_array(null, $data)) {
-                    $reports['error']['emptys'][] = $data;
+                // atau jika tipe tidak sesuai
+                if (
+                    in_array(null, $data) || in_array(
+                        Str::upper($data['4']),
+                        $tipeAllowed
+                    )
+                ) {
+                    $reports['error']['syntax'][] = $data;
                     continue;
                 }
 
                 $student = $studentMap->get($data['2']);
                 // jika tidak ada data siswa
                 if (!$student) {
-                    $reports['error']['unknown'][] = $data;
+                    $reports['error']['unknow'][] = $data;
                     continue;
                 }
 
                 // cek jika tidak ada buat
                 $absent = Absent::firstOrCreate([
                     'student_id' => $student->id,
-                    'type' => \Illuminate\Support\Str::upper(trim($data['4'])),
+                    'type' => Str::upper(trim($data['4'])),
                     'violation_date' => date('Y-m-d', strtotime($date))
                 ], [
                     'student_id' => $student->id,
-                    'type' => \Illuminate\Support\Str::upper(trim($data['4'])),
+                    'type' => Str::upper(trim($data['4'])),
                     'violation_date' => date('Y-m-d', strtotime($date)),
                     'user_id' => $userId
                 ]);
