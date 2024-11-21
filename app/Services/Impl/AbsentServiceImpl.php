@@ -28,7 +28,7 @@ class AbsentServiceImpl implements AbsentService
         // define range file cols
         $columnRange = [
             'first' => 'A',
-            'last' => 'H'
+            'last' => 'E'
         ];
 
         $pathTemp = $this->fileService->getTempPathFile($folderTemp);
@@ -53,11 +53,16 @@ class AbsentServiceImpl implements AbsentService
             return array_filter($subArray) !== []; // Cek apakah ada nilai non-null di sub-array
         });
 
-        try {
-            $userId  = auth()->user()->id;
-            $reports = [];
+        $userId  = auth()->user()->id;
+        $reports = [];
 
-            DB::beginTransaction();
+        DB::beginTransaction();
+
+        try {
+
+            // get all students id
+            $students   = \App\Models\Master\Student::whereIn('nis', array_column($datas, '2'))->get();
+            $studentMap = $students->keyBy('nis');
 
             foreach ($datas as $data) {
 
@@ -67,7 +72,7 @@ class AbsentServiceImpl implements AbsentService
                     continue;
                 }
 
-                $student = \App\Models\Master\Student::where('nis', $data['2'])->first();
+                $student = $studentMap->get($data['2']);
                 // jika tidak ada data siswa
                 if (!$student) {
                     $reports['error']['unknown'][] = $data;
