@@ -176,7 +176,7 @@
         </div>
     </div>
     @endisset
-    @isset($reports['error']['unknown'])
+    @isset($reports['error']['unknow'])
     <div class="w-full p-4 border border-gray-100 shadow rounded-lg gap-5 my-4">
         <div class="flex p-4 mb-4 text-sm text-red-800 border-t-4 border-red-300 bg-red-50" role="alert">
             <svg class="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -212,7 +212,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($reports['error']['syntax'] as $item)
+                    @foreach ($reports['error']['unknow'] as $item)
                         <tr class="bg-white border-b">
                             <td class="px-6 py-4">
                                 {{ $item['1'] }}
