@@ -305,7 +305,7 @@
     const btnSubmit = document.getElementById('btn-submit')
     const btnLoading = document.getElementById('btn-loading')
     // Register the plugin
-    // FilePond.registerPlugin(FilePondPluginFileValidateType);
+    FilePond.registerPlugin(FilePondPluginFileValidateType);
 
     FilePond.create(inputElement, {
         acceptedFileTypes: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
