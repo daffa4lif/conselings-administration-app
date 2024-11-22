@@ -4,6 +4,15 @@ namespace App\Services;
 
 interface SpreadsheetService
 {
+
+    /**
+     * Summary of create
+     * 
+     * membuat object spreadsheet
+     * @return \PhpOffice\PhpSpreadsheet\Spreadsheet
+     */
+    function create(): \PhpOffice\PhpSpreadsheet\Spreadsheet;
+
     /**
      * Summary of read
      * 
@@ -13,6 +22,18 @@ interface SpreadsheetService
      * @return \PhpOffice\PhpSpreadsheet\Spreadsheet
      */
     function read(string $pathFile, string $storageDriver = 'local'): \PhpOffice\PhpSpreadsheet\Spreadsheet;
+
+
+    /**
+     * Summary of setCellsValues
+     * 
+     * mengisi cell pada worksheet dengan value yang sudah ditentukan
+     * @param \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $activeSpreadsheet
+     * @param \Illuminate\Support\Collection|array $collection
+     * @param int $row
+     * @return \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet
+     */
+    function setCellsValues(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet, \Illuminate\Support\Collection|array $collection, int $row = 1): \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 
     /**
@@ -37,4 +58,15 @@ interface SpreadsheetService
      * @return array
      */
     function exportsDataCellInto2DArray(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $activeSpreadsheet, string $firstColumnIndex, string $lastColumnIndex): array;
+
+    /**
+     * Summary of spreadsheetExportToXlsx
+     * 
+     * export spreadsheet yang telah terdata menjadi file,
+     * return berupa path file
+     * @param \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param string $nameFile
+     * @return string
+     */
+    function spreadsheetExportToXlsx(\PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet, string $nameFile = null): string;
 }

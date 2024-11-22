@@ -15,6 +15,11 @@ class SpreadsheetServiceImpl implements SpreadsheetService
         \PhpOffice\PhpSpreadsheet\IOFactory::READER_CSV,
     ];
 
+    public function create(): \PhpOffice\PhpSpreadsheet\Spreadsheet
+    {
+        return new \PhpOffice\PhpSpreadsheet\Spreadsheet;
+    }
+
     public function read(string $pathFile, string $storageDriver = 'local'): \PhpOffice\PhpSpreadsheet\Spreadsheet
     {
         if (!Storage::disk($storageDriver)->exists($pathFile)) {
@@ -42,6 +47,19 @@ class SpreadsheetServiceImpl implements SpreadsheetService
         } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
             throw $e;
         }
+    }
+
+    public function setCellsValues(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet, array|\Illuminate\Support\Collection $collection, int $row = 1): \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet
+    {
+        if (count($collection) < 1 && count($collection) > 25) {
+            throw new SpreadsheetException("body tidak boleh kurang dari 1 atau lebih dari 25");
+        }
+
+        foreach ($collection as $key => $value) {
+            $worksheet->setCellValue([$key + 1, $row], $value);
+        }
+
+        return $worksheet;
     }
 
     /**
@@ -132,5 +150,14 @@ class SpreadsheetServiceImpl implements SpreadsheetService
         }
 
         return $datas;
+    }
+
+    public function spreadsheetExportToXlsx(\PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet, string|null $nameFile = null): string
+    {
+        $filepath = Storage::disk('local')->path('temp') . "/" . ($nameFile == null ? \Illuminate\Support\Str::random() : $nameFile) . ".xlsx";
+        $write    = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $write->save($filepath);
+
+        return $filepath;
     }
 }
