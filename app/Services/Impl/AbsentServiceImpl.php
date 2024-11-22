@@ -22,7 +22,7 @@ class AbsentServiceImpl implements AbsentService
 
     public function createNewAbsentsBySpreadsheetTemp(int $folderTemp, string $date): array
     {
-        if (\DateTime::createFromFormat('Y-m-d H:i:s', $date) === false) {
+        if (\DateTime::createFromFormat('Y-m-d', $date) === false) {
             throw new \Exception("date variabel is not a date");
         }
 
@@ -71,10 +71,7 @@ class AbsentServiceImpl implements AbsentService
                 // jika terdapat data yang kosong pada 1 baris tersebut
                 // atau jika tipe tidak sesuai
                 if (
-                    in_array(null, $data) || in_array(
-                        Str::upper($data['4']),
-                        $tipeAllowed
-                    )
+                    in_array(null, $data)
                 ) {
                     $reports['error']['syntax'][] = $data;
                     continue;
@@ -96,12 +93,14 @@ class AbsentServiceImpl implements AbsentService
                     'student_id' => $student->id,
                     'type' => Str::upper(trim($data['4'])),
                     'violation_date' => date('Y-m-d', strtotime($date)),
+                    'description' => htmlspecialchars(trim($data['5'])),
                     'user_id' => $userId
                 ]);
 
                 // jika data absent ada
                 if (!$absent->wasRecentlyCreated) {
                     $reports['error']['duplicate'][] = $data;
+                    continue;
                 }
 
                 $reports['create'][] = $data;
