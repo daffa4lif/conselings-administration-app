@@ -2,11 +2,10 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-2">
         <div class="w-full">
             <x-basic-label title="Status" />
-            <select wire:model.live.debounce.400ms="filterType" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <select wire:model.live.debounce.400ms="filterStatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 <option value="All">Semua</option>
-                <option>SAKIT</option>
-                <option>IZIN</option>
-                <option>ALPHA</option>
+                <option>PROCESS</option>
+                <option>FINISH</option>
             </select>
         </div>
         <div class="w-full">
@@ -17,7 +16,7 @@
                         <option>{{ $item }}</option>
                     @endforeach
                 </select>
-                <a href="{{ route('report.absent.print', ['year' => $filterYear, 'type' => $filterType]) }}" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center">Cetak</a>
+                <a href="{{ route('report.conseling-group.print', ['year' => $filterYear, 'status' => $filterStatus]) }}" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center">Cetak</a>
             </div>
         </div>
     </div>
@@ -34,19 +33,19 @@
             <thead class="text-xs text-gray-700 uppercase bg-green-100">
                 <tr>
                     <th scope="col" class="px-6 py-3">
-                        Tanggal Absent
+                        No
                     </th>
-                    <th scope="col" class="px-6 py-3">
-                        NIS
-                    </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 w-1/3">
                         Siswa
                     </th>
-                    <th scope="col" class="px-6 py-3">
-                        Tipe
+                    <th scope="col" class="px-6 py-3 w-2/3">
+                        Kasus
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Keterangan
+                        Status Proces
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Tanggal Ubah
                     </th>
                     <th scope="col" class="px-6 py-3">
                         
@@ -54,36 +53,39 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($absents as $key => $item)
-                    <tr class="bg-white border-b hover:bg-gray-50">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            {{ $item->violation_date }}
-                        </th>
-                        <td class="px-6 py-4">
-                            {{ $item->student->nis }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->student->name }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->type }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->description }}
-                        </td>
-                        <td class="px-6 py-4 text-right">
-                            <a href="{{ route('absent.detail', $item->id) }}" class="font-medium text-blue-600 hover:underline">Detail</a>
-                        </td>
-                    </tr>
+                @forelse ($conselings as $key => $item)
+                <tr class="bg-white border-b hover:bg-gray-100">
+                    <td class="px-6 py-4">
+                        {{ ($conselings->currentPage() - 1) * $conselings->perPage() + $key + 1 }}
+                    </td>
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        @foreach ($item->students as $student)
+                            <p>{{ $student->name }}</p>
+                            <p class="text-xs text-gray-500">{{ $student->nis }}</p>
+                        @endforeach
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ $item->case }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $item->status }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $item->updated_at }}
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <a href="{{ route('conseling-group.detail', $item->id) }}" class="font-medium text-blue-600 hover:underline">Detail</a>
+                    </td>
+                </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="px-6 py-4 text-center">tidak ada data absent</td>
+                    <td colspan="4" class="px-6 py-4 text-center text-gray-900 font-medium text-md">Tidak Ditemukan</td>
                 </tr>
                 @endforelse
             </tbody>
         </table>
-
     </div>
+
     <div class="flex items-center gap-3 mt-4">
         <p class="text-sm">Per Page</p>
         <select name="filter" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-1" wire:model.change="perPage">
@@ -93,7 +95,7 @@
         </select>
     </div>
 
-    <div class="mt-5 sm:flex sm:justify-end">
-        {{ $absents->links() }}
+    <div class="mt-4 sm:flex sm:justify-end">
+        {{ $conselings->links() }}
     </div>
 </div>
