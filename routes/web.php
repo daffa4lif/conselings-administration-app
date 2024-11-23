@@ -111,6 +111,16 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [ReportController::class, "indexHomeVisits"])->name("report.visit");
             Route::get('/print', [ReportController::class, "printHomeVisits"])->name("report.visit.print");
         });
+
+        Route::prefix("conselings")->group(function () {
+            Route::get('/', [ReportController::class, "indexConselings"])->name("report.conseling");
+            Route::get('/print', [ReportController::class, "printConselings"])->name("report.conseling.print");
+        });
+
+        Route::prefix("conselings-group")->group(function () {
+            Route::get('/', [ReportController::class, "indexConselingsGroup"])->name("report.conseling-group");
+            Route::get('/print', [ReportController::class, "printConselingsGroup"])->name("report.conseling-group.print");
+        });
     });
 
     Route::prefix("file")->group(function () {
