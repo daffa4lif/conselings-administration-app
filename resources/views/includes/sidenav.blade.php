@@ -71,6 +71,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('case.index') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                    <i class="fa-regular fa-clipboard w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"></i>
+                    <span class="ms-3">Kasus</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('home-visit.index') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                     <i class="fa-solid fa-house-user w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"></i>
                     <span class="ms-3">Kunjungan Siswa</span>

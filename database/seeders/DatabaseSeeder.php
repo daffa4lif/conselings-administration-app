@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             $this->call(HomeVisitSeeder::class);
             $this->call(ConselingSeeder::class);
             $this->call(ConselingGroupSeeder::class);
+            $this->call(StudenCaseSeeder::class);
         }
     }
 }

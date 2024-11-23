@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AbsentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CaseController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ConselingController;
 use App\Http\Controllers\ConselingGrupController;
@@ -75,6 +76,19 @@ Route::middleware(['auth'])->group(function () {
         Route::post("/{id}", [AbsentController::class, "detailPost"]);
 
         Route::get("/{id}/delete", [AbsentController::class, "delete"])->name("absent.delete");
+
+    });
+
+    Route::prefix('cases')->group(function () {
+        Route::get('/', [CaseController::class, 'index'])->name('case.index');
+
+        Route::get('/create', [CaseController::class, 'create'])->name('case.create');
+        Route::post('/create', [CaseController::class, 'createPost']);
+
+        Route::get('/{id}', [CaseController::class, 'detail'])->name('case.detail');
+        Route::post('/{id}', [CaseController::class, 'DetailPost']);
+
+        Route::get('/{id}/delete', [CaseController::class, 'delete'])->name('case.delete');
 
     });
 

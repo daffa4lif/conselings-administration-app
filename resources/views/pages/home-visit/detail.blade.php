@@ -24,7 +24,7 @@
         </div>
         <div class="mb-5">
             <x-basic-label for="alamat" title="Alamat" />
-            <textarea name="address" id="address" cols="30" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-100 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 cursor-not-allowed" disabled>{{ $visits->student->name }}</textarea>
+            <textarea name="address" id="address" cols="30" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-100 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 cursor-not-allowed" disabled>{{ $visits->student->address }}</textarea>
         </div>
         
         <div class="mt-20 mb-5">
@@ -36,7 +36,7 @@
             <textarea name="case" id="solusi" cols="30" rows="2" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">{{ old('case', $visits->case) }}</textarea>
         </div>
         <div class="mb-5">
-            <x-basic-label for="solusi" title="Solusi" />
+            <x-basic-label for="solusi" title="Status" />
             <select name="status" id="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 <option @selected($visits->status == "PROCESS")>PROCESS</option>
                 <option @selected($visits->status == "FINISH")>FINISH</option>
