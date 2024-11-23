@@ -37,4 +37,22 @@ class FileServiceImpl implements FileService
 
         return false;
     }
+
+    public function downloadExportFile(string $filePath): void
+    {
+        if (!file_exists($filePath)) {
+            throw new \Exception("file not exists");
+        }
+
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="' . basename($filePath) . '"');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($filePath));
+
+        readfile($filePath);
+        unlink($filePath);
+    }
 }

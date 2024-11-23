@@ -21,4 +21,6 @@ interface FileService
      * @return bool
      */
     function deleteTempData(int $tempFolderNumber): bool;
+
+    function downloadExportFile(string $filePath): void;
 }
