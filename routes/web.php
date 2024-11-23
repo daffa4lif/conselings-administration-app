@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeVisitController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -138,6 +139,20 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix("conselings-group")->group(function () {
             Route::get('/', [ReportController::class, "indexConselingsGroup"])->name("report.conseling-group");
             Route::get('/print', [ReportController::class, "printConselingsGroup"])->name("report.conseling-group.print");
+        });
+    });
+
+    Route::prefix('master')->group(function () {
+        Route::prefix("users")->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('master.user.index');
+
+            Route::get('/create', [UserController::class, 'create'])->name('master.user.create');
+            Route::post('/create', [UserController::class, 'createPost']);
+
+            Route::get('/{id}', [UserController::class, 'detail'])->name('master.user.detail');
+            Route::post('/{id}', [UserController::class, 'detailPost']);
+
+            Route::get('/{id}/delete', [UserController::class, 'delete'])->name('master.user.delete');
         });
     });
 
