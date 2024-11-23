@@ -118,6 +118,9 @@
                         <a href="{{ route('report.absent') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Rekap Absent</a>
                     </li>
                     <li>
+                        <a href="{{ route('report.case') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Rekap Kasus</a>
+                    </li>
+                    <li>
                         <a href="{{ route('report.visit') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Rekap Kunjungan</a>
                     </li>
                     <li>

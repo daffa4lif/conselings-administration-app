@@ -49,7 +49,7 @@ class ReportController extends Controller
                 return [
                     $key + 1,
                     $absent->violation_date,
-                    $absent->violation_date,
+                    $absent->created_at,
                     $absent->student->nis,
                     $absent->student->name,
                     $absent->type,
@@ -68,6 +68,64 @@ class ReportController extends Controller
             $this->fileService->downloadExportFile($path);
 
         } catch (\Throwable $th) {
+            return self::redirectResponseServerError();
+        }
+    }
+
+    public function indexCases()
+    {
+        return view("pages.report.case");
+    }
+
+    public function printCasesStudent(Request $request)
+    {
+        $cases = \App\Models\StudenCase::with('student');
+
+        if ($request->has('type') && in_array($request->input('type'), ['RINGAN', 'SEDANG', 'BESAR'])) {
+            $cases = $cases->where('type', $request->input('type'));
+        }
+
+        $cases = $request->has('year') ? $cases->whereYear('created_at', $request->input('year')) : $cases->whereYear('created_at', now()->format('Y'));
+
+        $spreadsheet = $this->spService->create();
+        $worksheet   = $spreadsheet->getActiveSheet();
+
+        try {
+            $worksheet = $this->spService->setCellsValues($worksheet, [
+                'No',
+                'Tanggal Buat',
+                'NIM',
+                'Nama',
+                'Kasus',
+                'Tipe',
+                'Point',
+                'Solusi'
+            ]);
+
+            $cases = $cases->get()->map(function ($case, $key) {
+                return [
+                    $key + 1,
+                    $case->created_at,
+                    $case->student->nis,
+                    $case->student->name,
+                    $case->case,
+                    $case->type,
+                    $case->point,
+                    $case->solution,
+                ];
+            });
+
+            // isi cell
+            foreach ($cases as $key => $value) {
+                $worksheet = $this->spService->setCellsValues($worksheet, $value, $key + 2);
+            }
+
+            $path = $this->spService->spreadsheetExportToXlsx($spreadsheet, 'rekap-kasus-siswa-' . $request->input('year') ?? now()->format('Y'));
+
+            $this->fileService->downloadExportFile($path);
+
+        } catch (\Throwable $th) {
+            dd($th);
             return self::redirectResponseServerError();
         }
     }

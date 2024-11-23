@@ -120,6 +120,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/print', [ReportController::class, "printAbsents"])->name("report.absent.print");
         });
 
+        Route::prefix("cases")->group(function () {
+            Route::get('/', [ReportController::class, "indexCases"])->name("report.case");
+            Route::get('/print', [ReportController::class, "printCasesStudent"])->name("report.case.print");
+        });
+
         Route::prefix("home-visits")->group(function () {
             Route::get('/', [ReportController::class, "indexHomeVisits"])->name("report.visit");
             Route::get('/print', [ReportController::class, "printHomeVisits"])->name("report.visit.print");
