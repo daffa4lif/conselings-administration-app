@@ -10,9 +10,14 @@ class ListVisits extends Component
 {
     use \Livewire\WithPagination;
 
-    protected $queryString = ['filterYear' => ['except' => '']];
+    protected $queryString = [
+        'filterStatus' => ['except' => ''],
+        'filterYear' => ['except' => '']
+    ];
 
     public string $filterYear;
+
+    public string $filterStatus = 'All';
 
     public $perPage = 10;
 
@@ -27,6 +32,9 @@ class ListVisits extends Component
         rsort($years);
 
         $visits = HomeVisit::with('student')
+            ->when($this->filterStatus != 'All', function ($query) {
+                $query->where('status', $this->filterStatus);
+            })
             ->whereYear('created_at', $this->filterYear ?? current($years))
             ->paginate($this->perPage);
 

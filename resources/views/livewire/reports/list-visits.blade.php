@@ -1,13 +1,23 @@
 <div>
-    <div class="w-full mb-5">
-        <x-basic-label title="Filter Tahun" />
-        <div class="flex sm:justify-center items-center gap-2">
-            <select wire:model.live.debounce.400ms="filterYear" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                @foreach ($years as $item)
-                    <option>{{ $item }}</option>
-                @endforeach
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-2">
+        <div class="w-full">
+            <x-basic-label title="Status" />
+            <select wire:model.live.debounce.400ms="filterStatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option value="All">Semua</option>
+                <option>PROCESS</option>
+                <option>FINISH</option>
             </select>
-            <a href="#" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center">Cetak</a>
+        </div>
+        <div class="w-full">
+            <x-basic-label title="Filter Tahun" />
+            <div class="flex sm:justify-center items-center gap-2">
+                <select wire:model.live.debounce.400ms="filterYear" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    @foreach ($years as $item)
+                        <option>{{ $item }}</option>
+                    @endforeach
+                </select>
+                <a href="{{ route('report.visit.print', ['year' => $filterYear, 'status' => $filterStatus]) }}" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center">Cetak</a>
+            </div>
         </div>
     </div>
     <div wire:loading class="w-full gap-3 p-4 border border-gray-100 shadow rounded-md mb-2">
