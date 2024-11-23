@@ -9,7 +9,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeVisitController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -23,9 +22,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get('/', function () {
-        return view('index');
-    });
+    Route::get('/', [DashboardController::class, "index"])->name("dashboard");
 
     Route::prefix("home-visits")->group(function () {
         Route::get('/', [HomeVisitController::class, 'index'])->name('home-visit.index');
