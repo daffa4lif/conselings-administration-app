@@ -88,8 +88,12 @@ class StudentController extends Controller
 
     public function detailPost($nis, Request $request)
     {
+        $student = Student::where('nis', $nis)->firstOr(function () {
+            return self::redirectResponseStudentNotFond();
+        });
+
         $request->validate([
-            'nis' => ['required', 'numeric', "unique:siswas,nis,$nis"],
+            'nis' => ['required', 'numeric', "unique:students,id,$student->id"],
             'name' => ['required', 'max:255', 'min:2'],
             'gender' => ['required', 'in:PRIA,WANITA'],
             'address' => ['required', 'string']
@@ -97,9 +101,6 @@ class StudentController extends Controller
             'nis.unique' => 'NIS sudah digunakan'
         ]);
 
-        $student = Student::where('nis', $nis)->firstOr(function () {
-            return self::redirectResponseStudentNotFond();
-        });
 
         try {
             $student->nis     = $request->input('nis');
