@@ -25,11 +25,11 @@ class ReportController extends Controller
     {
         $absents = \App\Models\Absent::with('student');
 
-        if ($request->has('status') && in_array($request->input('status'), ['FINISH', 'PROCESS'])) {
-            $absents = $absents->where('status', $request->input('status'));
+        if ($request->has('type') && in_array($request->input('type'), ['IZIN', 'ALPHA', 'SAKIT'])) {
+            $absents = $absents->where('type', $request->input('type'));
         }
 
-        $absents = $request->has('year') ? $absents->whereYear('created_at', $request->input('year')) : $absents->whereYear('created_at', now()->format('Y'));
+        $absents = $request->has('year') ? $absents->whereYear('violation_date', $request->input('year')) : $absents->whereYear('violation_date', now()->format('Y'));
 
         $spreadsheet = $this->spService->create();
         $worksheet   = $spreadsheet->getActiveSheet();
@@ -49,7 +49,7 @@ class ReportController extends Controller
                 return [
                     $key + 1,
                     $absent->violation_date,
-                    $absent->created_at,
+                    $absent->violation_date,
                     $absent->student->nis,
                     $absent->student->name,
                     $absent->type,
@@ -129,6 +129,10 @@ class ReportController extends Controller
         }
     }
 
+    public function indexConselings()
+    {
+        return view("pages.report.conseling");
+    }
 
     public function printConselings(Request $request)
     {
@@ -178,6 +182,11 @@ class ReportController extends Controller
         } catch (\Throwable $th) {
             return self::redirectResponseServerError();
         }
+    }
+
+    public function indexConselingsGroup()
+    {
+        return view("pages.report.conseling-group");
     }
 
     public function printConselingsGroup(Request $request)
