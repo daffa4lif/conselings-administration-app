@@ -8,6 +8,7 @@ use App\Http\Controllers\ConselingController;
 use App\Http\Controllers\ConselingGrupController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeVisitController;
+use App\Http\Controllers\MajorController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
@@ -63,6 +64,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/{id}/upload-students', [ClassroomController::class, 'registerStudentByUploadPost']);
 
         Route::get('delete/{id}', [ClassroomController::class, 'delete'])->name('classroom.delete');
+    });
+
+    Route::prefix('major')->group(function () {
+        Route::get('/', [MajorController::class, 'index'])->name('major.index');
+        Route::post('/', [MajorController::class, 'createPost']);
+        Route::get('/{id}', [MajorController::class, 'detail'])->name('major.detail');
+        Route::post('/{id}', [MajorController::class, 'detailPost']);
+        Route::get('/{id}/delete', [MajorController::class, 'delete'])->name('major.delete');
     });
 
     Route::prefix("absents")->group(function () {
