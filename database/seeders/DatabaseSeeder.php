@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
 
         if (\Illuminate\Support\Facades\App::isLocal()) {
             $this->call(StudentSeeder::class);
+            $this->call(MajorSeeder::class);
             $this->call(ClassroomSeeder::class);
             $this->call(StudentsClassroomSeeder::class);
             $this->call(HomeVisitSeeder::class);

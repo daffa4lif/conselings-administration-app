@@ -26,13 +26,9 @@ class ClassroomFactory extends Factory
         // Combine Roman numeral and alphabet
         $name = $romanNumerals[$romanIndex] . ' ' . $alphabets[$alphabetIndex];
 
-        // Randomly assign major
-        $majors = ['IPA', 'IPS'];
-        $major  = $this->faker->randomElement($majors);
-
         return [
             'name' => $name,
-            'major' => $major,
+            'major' => \App\Models\Master\Major::inRandomOrder()->first()->name,
         ];
     }
 }
