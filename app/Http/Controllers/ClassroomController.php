@@ -3,19 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Master\Classroom;
+use App\Models\Master\Major;
 use Illuminate\Http\Request;
 
 class ClassroomController extends Controller
 {
     public function index()
     {
-        return view("pages.classroom.index");
+        $majors = Major::get();
+        return view("pages.classroom.index", compact("majors"));
     }
 
     public function createPost(Request $request)
     {
         $request->validate([
-            'major' => ['required', 'in:IPA,IPS'],
+            'major' => ['required', 'exists:majors,name'],
             'name' => ['required', 'string', 'max:255', new \App\Rules\UniqueClassroomName]
         ]);
 
@@ -34,14 +36,16 @@ class ClassroomController extends Controller
     public function detail($id)
     {
         $classroom = Classroom::findOrFail($id);
+        $majors    = Major::get();
 
-        return view("pages.classroom.detail", compact("classroom"));
+
+        return view("pages.classroom.detail", compact("classroom", "majors"));
     }
 
     public function detailPost($id, Request $request)
     {
         $request->validate([
-            'major' => ['required', 'in:IPA,IPS'],
+            'major' => ['required', "exists:majors,name"],
             'name' => ['required', 'string', 'max:255', new \App\Rules\UniqueClassroomName]
         ]);
 
