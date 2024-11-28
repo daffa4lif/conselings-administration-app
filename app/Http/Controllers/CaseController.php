@@ -51,7 +51,7 @@ class CaseController extends Controller
     public function detailPost($id, Request $request)
     {
         $request->validate([
-            'type' => ['required', 'in:RINGAN.SEDANG,BERAT'],
+            'type' => ['required', 'in:RINGAN,SEDANG,BERAT'],
             'point' => ['required', 'numeric', 'min:0', 'max:110'],
             'case' => ['required', 'string', 'max:255', 'min:2'],
             'status' => ['required', 'in:PROCESS,FINISH'],
