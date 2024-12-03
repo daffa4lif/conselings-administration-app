@@ -47,7 +47,8 @@ class RolePermission extends Seeder
             "super admin",
             "kepala sekolah",
             "guru kelas",
-            "guru bk"
+            "guru bk",
+            "siswa"
         ];
 
         foreach ($permissions as $item) {
