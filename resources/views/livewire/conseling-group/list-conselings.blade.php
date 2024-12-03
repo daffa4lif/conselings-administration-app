@@ -40,6 +40,9 @@
                     <th scope="col" class="px-6 py-3 w-1/3">
                         Siswa
                     </th>
+                    <th scope="col" class="px-6 py-3">
+                        Kategori
+                    </th>
                     <th scope="col" class="px-6 py-3 w-2/3">
                         Kasus
                     </th>
@@ -66,6 +69,9 @@
                             <p class="text-xs text-gray-500">{{ $student->nis }}</p>
                         @endforeach
                     </th>
+                    <td class="px-6 py-4">
+                        {{ $item->category }}
+                    </td>
                     <td class="px-6 py-4">
                         {{ $item->case }}
                     </td>

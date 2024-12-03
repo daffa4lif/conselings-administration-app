@@ -21,11 +21,13 @@ class ConselingGrupController extends Controller
     {
         $request->validate([
             'studentIds.*' => ['required', 'exists:students,id'],
+            'category' => 'required',
             'case' => ['required', 'min:3', 'max:255'],
         ]);
 
         try {
             $conseling = ConselingGroup::create([
+                'category' => $request->input('category'),
                 'case' => $request->input('case'),
                 'status' => 'PROCESS',
                 'user_id' => auth()->user()->id
@@ -51,6 +53,7 @@ class ConselingGrupController extends Controller
         $request->validate([
             'studentIds.*' => ['required', 'exists:students,id'],
             'case' => ['required', 'min:3', 'max:255'],
+            'category' => 'required',
             'status' => ['required', 'in:PROCESS,FINISH']
         ]);
 
@@ -59,6 +62,7 @@ class ConselingGrupController extends Controller
         });
 
         try {
+            $conseling->category = $request->input('category');
             $conseling->case     = $request->input('case');
             $conseling->status   = $request->input('status');
             $conseling->solution = $request->input('solution');

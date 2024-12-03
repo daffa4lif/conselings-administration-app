@@ -162,6 +162,15 @@
             </select>
         </div>
 
+        <div class="mb-5">
+            <x-basic-label for="nis" title="Kategori" />
+            <select name="category" id="student" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option>{{ \App\Models\Conseling\Conseling::CATEGORY_AKADEMIK }}</option>
+                <option>{{ \App\Models\Conseling\Conseling::CATEGORY_NON_AKADEMIK }}</option>
+                <option>{{ \App\Models\Conseling\Conseling::CATEGORY_KEDISIPLINAN }}</option>
+            </select>
+        </div>
+
         <div class="mt-20 mb-5">
             <x-basic-label for="kasus" title="Kasus" />
             <textarea name="case" id="kasus" cols="30" rows="2" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" required>{{ old('case') }}</textarea>
