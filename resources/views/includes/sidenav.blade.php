@@ -58,30 +58,39 @@
                     <span class="ms-3">Dashboard</span>
                 </a>
             </li>
+            @can('list student')
             <li>
                 <a href="{{ route('student.index') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                     <i class="fa-solid fa-user w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"></i>
                     <span class="ms-3">Siswa</span>
                 </a>
             </li>
+            @endcan
+            @can('list absent')
             <li>
                 <a href="{{ route('absent.index') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                     <i class="fa-regular fa-clipboard w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"></i>
                     <span class="ms-3">Absent</span>
                 </a>
             </li>
+            @endcan
+            @can('list cases')
             <li>
                 <a href="{{ route('case.index') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                     <i class="fa-regular fa-clipboard w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"></i>
                     <span class="ms-3">Kasus</span>
                 </a>
             </li>
+            @endcan
+            @can('list home visit')
             <li>
                 <a href="{{ route('home-visit.index') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                     <i class="fa-solid fa-house-user w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"></i>
                     <span class="ms-3">Kunjungan Siswa</span>
                 </a>
             </li>
+            @endcan
+            @can('list classroom')
             <li>
                 <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100" aria-controls="dropdown-classroom" data-collapse-toggle="dropdown-classroom">
                     <i class="fa-solid fa-landmark w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"></i>
@@ -99,6 +108,8 @@
                     </li>
                 </ul>
             </li>
+            @endcan
+            @can('list conseling')
             <li>
                 <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100" aria-controls="dropdown-conselings" data-collapse-toggle="dropdown-conselings">
                     <i class="fa-solid fa-book w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"></i>
@@ -116,6 +127,8 @@
                     </li>
                 </ul>
             </li>
+            @endcan
+            @can('list reports')
             <li>
                 <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
                     <i class="fa-solid fa-file-invoice w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"></i>
@@ -142,11 +155,13 @@
                     </li>
                 </ul>
             </li>
+            @endcan
         </ul>
 
         <div class="border-b-2 my-4"></div>
 
         <ul class="space-y-2 font-medium">
+            @can('list user staff')
             <li>
                 <a href="{{ route('master.user.index') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                     <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
@@ -156,24 +171,8 @@
                     <span class="ms-3">Users</span>
                 </a>
             </li>
+            @endcan
         </ul>
-
-        {{-- CTA Start --}}
-        <div id="dropdown-cta" class="p-4 mt-6 rounded-lg bg-green-100" role="alert">
-            <div class="flex items-center mb-3">
-               <span class="bg-yellow-100 text-orange-800 text-sm font-semibold me-2 px-2.5 py-0.5 rounded">Announcement</span>
-               <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-green-50 inline-flex justify-center items-center w-6 h-6 text-green-900 rounded-lg focus:ring-2 focus:ring-green-400 p-1 hover:bg-green-200" data-dismiss-target="#dropdown-cta" aria-label="Close">
-                    <span class="sr-only">Close</span>
-                    <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-               </button>
-            </div>
-            <p class="mb-3 text-sm text-green-800">
-               Tamplate Tailwind with Flowbite
-            </p>
-        </div>
-        {{-- CTA End --}}
 
     </div>
 </aside>
