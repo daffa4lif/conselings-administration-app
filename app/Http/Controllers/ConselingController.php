@@ -21,12 +21,14 @@ class ConselingController extends Controller
     {
         $request->validate([
             'studentId' => ['required', 'exists:students,id'],
+            'category' => 'required',
             'case' => ['required', 'max:255', 'min:3']
         ]);
 
         try {
             $conseling = Conseling::create([
                 'student_id' => $request->input('studentId'),
+                'category' => $request->input('category'),
                 'case' => $request->input('case'),
                 'status' => 'PROCESS',
                 'user_id' => auth()->user()->id
@@ -49,6 +51,7 @@ class ConselingController extends Controller
     {
         $request->validate([
             'case' => ['required', 'max:255', 'min:3'],
+            'category' => 'required',
             'status' => ['required', 'in:PROCESS,FINISH']
         ]);
 
@@ -57,6 +60,7 @@ class ConselingController extends Controller
         });
 
         try {
+            $conseling->category = $request->input('category');
             $conseling->case     = $request->input('case');
             $conseling->status   = $request->input('status');
             $conseling->solution = $request->input('solution');

@@ -28,6 +28,14 @@
         </div>
         
         <div class="mt-20 mb-5">
+            <x-basic-label for="nis" title="Kategori" />
+            <select name="category" id="student" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option @selected(\App\Models\Conseling\Conseling::CATEGORY_AKADEMIK == $conseling->category)>{{ \App\Models\Conseling\Conseling::CATEGORY_AKADEMIK }}</option>
+                <option @selected(\App\Models\Conseling\Conseling::CATEGORY_NON_AKADEMIK == $conseling->category)>{{ \App\Models\Conseling\Conseling::CATEGORY_NON_AKADEMIK }}</option>
+                <option @selected(\App\Models\Conseling\Conseling::CATEGORY_KEDISIPLINAN == $conseling->category)>{{ \App\Models\Conseling\Conseling::CATEGORY_KEDISIPLINAN }}</option>
+            </select>
+        </div>
+        <div class="mb-5">
             <x-basic-label for="status" title="Status" />
             <select name="status" id="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                 <option @selected(old('status', $conseling->status) == "PROCESS")>PROCESS</option>

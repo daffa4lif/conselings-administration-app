@@ -38,10 +38,10 @@
                         No
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        NIS
+                        Nama
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Nama
+                        Kategori
                     </th>
                     <th scope="col" class="w-2/3 px-6">
                         Kasus
@@ -63,12 +63,13 @@
                     <td class="px-6 py-4">
                         {{ ($conselings->currentPage() - 1) * $conselings->perPage() + $key + 1 }}
                     </td>
-                    <td class="px-6 py-4">
-                        {{ $item->student->nis }}
-                    </td>
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                        {{ $item->student->name }}
+                        <p>{{ $item->student->name }}</p>
+                        <p class="text-gray-600 text-sm">{{ $item->student->nis }}</p>
                     </th>
+                    <td class="px-6 py-4">
+                        {{ $item->category }}
+                    </td>
                     <td class="px-6 py-4">
                         {{ $item->case }}
                     </td>
