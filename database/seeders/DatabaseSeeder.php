@@ -13,7 +13,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        $this->call(UserSeeder::class);
+        $this->call([
+            RolePermission::class,
+            UserSeeder::class
+        ]);
 
         if (\Illuminate\Support\Facades\App::isLocal()) {
             $this->call(StudentSeeder::class);
