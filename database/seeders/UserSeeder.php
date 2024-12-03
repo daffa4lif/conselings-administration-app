@@ -18,6 +18,24 @@ class UserSeeder extends Seeder
             'name' => 'Super Admin BK',
             'email' => 'super@gmail.com',
             'password' => 'password'
-        ]);
+        ])->assignRole("super admin");
+
+        User::create([
+            'name' => 'nama kepala sekolah',
+            'email' => 'kapsek@example.com',
+            'password' => 'password'
+        ])->assignRole("kepala sekolah");
+
+        User::create([
+            'name' => 'nama guru kelas',
+            'email' => 'guru@example.com',
+            'password' => 'password'
+        ])->assignRole("guru kelas");
+
+        User::create([
+            'name' => 'nama guru bk',
+            'email' => 'guru-bk@example.com',
+            'password' => 'password'
+        ])->assignRole("guru bk");
     }
 }
