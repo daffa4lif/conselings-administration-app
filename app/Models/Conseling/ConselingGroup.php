@@ -11,6 +11,10 @@ class ConselingGroup extends Model
 {
     use HasFactory;
 
+    const CATEGORY_AKADEMIK = "AKADEMIK";
+    const CATEGORY_NON_AKADEMIK = "NON-AKADEMIK";
+    const CATEGORY_KEDISIPLINAN = "KEDISIPLINAN";
+
     protected $guarded = [
         'id'
     ];

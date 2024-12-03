@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('conselings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id');
+            $table->string("category");
             $table->string('case');
             $table->enum('status', ['PROCESS', 'FINISH']);
             $table->text('solution')->nullable();

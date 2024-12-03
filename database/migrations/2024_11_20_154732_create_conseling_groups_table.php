@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('conseling_groups', function (Blueprint $table) {
             $table->id();
+            $table->string("category");
             $table->string('case');
             $table->enum('status', ['PROCESS', 'FINISH']);
             $table->text('solution')->nullable();

@@ -19,6 +19,7 @@ class ConselingGroupFactory extends Factory
         $decission = fake()->boolean();
 
         return [
+            'category' => fake()->randomElement(["AKADEMIK", "NON-AKADEMIK", "KEDISIPLINAN"]),
             'case' => fake()->paragraph(1),
             'status' => $decission ? 'FINISH' : 'PROCESS',
             'solution' => $decission ? fake()->paragraph() : null,

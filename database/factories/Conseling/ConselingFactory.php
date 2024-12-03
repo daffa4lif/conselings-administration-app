@@ -20,6 +20,7 @@ class ConselingFactory extends Factory
 
         return [
             'student_id' => \App\Models\Master\Student::inRandomOrder()->first()->id,
+            'category' => fake()->randomElement(["AKADEMIK", "NON-AKADEMIK", "KEDISIPLINAN"]),
             'case' => fake()->paragraph(1),
             'status' => $decission ? 'FINISH' : 'PROCESS',
             'solution' => $decission ? fake()->paragraph() : null,
