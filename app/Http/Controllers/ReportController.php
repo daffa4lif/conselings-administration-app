@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -72,9 +73,37 @@ class ReportController extends Controller
         }
     }
 
-    public function indexCases()
+    public function indexCases(Request $request)
     {
-        return view("pages.report.case");
+        $cases = \App\Models\StudenCase::selectRaw('YEAR(created_at) as year, type, COUNT(*) as total')
+            ->groupBy('year', 'type')
+            ->orderBy('year', 'desc')
+            ->get();
+
+        $years = $cases->groupBy('year');
+        $datas = [];
+        foreach ($years as $year) {
+            foreach ($year as $item) {
+                $datas[$item->type][] = $item->total;
+            }
+        }
+
+        $results = [];
+        foreach ($datas as $key => $value) {
+            $results[] = [
+                'name' => $key,
+                'data' => $datas[$key]
+            ];
+        }
+
+        $rekaps = [];
+        foreach ($results as $items) {
+            $rekaps[$items['name']] = array_sum($items['data']);
+        }
+
+        $categories = $years->keys()->toArray();
+
+        return view("pages.report.case", compact("categories", "results", "rekaps"));
     }
 
     public function printCasesStudent(Request $request)
