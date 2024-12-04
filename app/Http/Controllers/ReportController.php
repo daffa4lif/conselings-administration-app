@@ -189,7 +189,35 @@ class ReportController extends Controller
 
     public function indexHomeVisits()
     {
-        return view("pages.report.home-visit");
+        $visits = \App\Models\HomeVisit::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as total')
+            ->groupBy('year', 'month')
+            ->orderBy('year', 'desc')
+            ->get();
+
+        $datas = [];
+        foreach ($visits as $rekap) {
+            $year  = $rekap['year'];
+            $month = $rekap['month'];
+            $total = $rekap['total'];
+
+            // Inisialisasi array untuk setiap tahun jika belum ada
+            if (!isset($datas[$year])) {
+                $datas[$year] = array_fill(0, 12, null);
+            }
+
+            // Isi array bulan sesuai dengan datanya
+            $datas[$year][$month - 1] = $total;
+        }
+
+        $results = [];
+        foreach ($datas as $year => $totals) {
+            $results[] = [
+                'name' => (string) $year,
+                'data' => $totals
+            ];
+        }
+
+        return view("pages.report.home-visit", compact("results"));
     }
 
     public function printHomeVisits(Request $request)
