@@ -13,6 +13,14 @@
     <form method="POST">
         @csrf
         <div class="mb-5">
+            <x-basic-label for="nis" title="Unit Kerja" />
+            <select name="role" id="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                @foreach ($roles as $item)
+                    <option value="{{ $item->name }}" @selected($user->hasRole($item->name))>{{ $item->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="mb-5">
             <x-basic-label for="nis" title="Email" />
             <x-basic-input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" required />
         </div>

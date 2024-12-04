@@ -166,26 +166,12 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::middleware('permission:list user staff, list user student')->prefix('master')->group(function () {
+    Route::middleware('permission:list user staff')->prefix('master')->group(function () {
         Route::prefix("users")->group(function () {
             Route::prefix("staff")->group(function () {
                 Route::get('/', [UserController::class, 'index'])->name('master.user.index');
 
                 Route::middleware('permission:crud user staff')->group(function () {
-                    Route::get('/create', [UserController::class, 'create'])->name('master.user.create');
-                    Route::post('/create', [UserController::class, 'createPost']);
-
-                    Route::get('/{id}', [UserController::class, 'detail'])->name('master.user.detail');
-                    Route::post('/{id}', [UserController::class, 'detailPost']);
-
-                    Route::get('/{id}/delete', [UserController::class, 'delete'])->name('master.user.delete');
-                });
-            });
-
-            Route::prefix("student")->group(function () {
-                Route::get('/', [UserController::class, 'index'])->name('master.user.index');
-
-                Route::middleware('permission:crud user student')->group(function () {
                     Route::get('/create', [UserController::class, 'create'])->name('master.user.create');
                     Route::post('/create', [UserController::class, 'createPost']);
 
