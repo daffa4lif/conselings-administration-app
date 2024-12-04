@@ -54,7 +54,7 @@ class CaseController extends Controller
             'type' => ['required', 'in:RINGAN,SEDANG,BERAT'],
             'point' => ['required', 'numeric', 'min:0', 'max:110'],
             'case' => ['required', 'string', 'max:255', 'min:2'],
-            'status' => ['required', 'in:PROCESS,FINISH'],
+            'status' => ['required', 'in:PROCESS,FINISH,DIALIHKAN'],
             'solution' => ['required_if:status,FINISH']
         ]);
 

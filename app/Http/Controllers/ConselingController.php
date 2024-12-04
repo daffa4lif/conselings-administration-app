@@ -52,7 +52,7 @@ class ConselingController extends Controller
         $request->validate([
             'case' => ['required', 'max:255', 'min:3'],
             'category' => 'required',
-            'status' => ['required', 'in:PROCESS,FINISH']
+            'status' => ['required', 'in:PROCESS,FINISH,DIALIHKAN']
         ]);
 
         $conseling = Conseling::findOr($id, function () {

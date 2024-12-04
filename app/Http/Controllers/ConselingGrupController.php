@@ -54,7 +54,7 @@ class ConselingGrupController extends Controller
             'studentIds.*' => ['required', 'exists:students,id'],
             'case' => ['required', 'min:3', 'max:255'],
             'category' => 'required',
-            'status' => ['required', 'in:PROCESS,FINISH']
+            'status' => ['required', 'in:PROCESS,FINISH,DIALIHKAN']
         ]);
 
         $conseling = ConselingGroup::with('students')->findOr($id, function () {
