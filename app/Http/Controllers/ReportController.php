@@ -39,6 +39,7 @@ class ReportController extends Controller
             $datas[$year][$month - 1] = $total;
         }
 
+        $results = [];
         foreach ($datas as $year => $totals) {
             $results[] = [
                 'name' => (string) $year,
@@ -245,7 +246,40 @@ class ReportController extends Controller
 
     public function indexConselings()
     {
-        return view("pages.report.conseling");
+        $conselings = \App\Models\Conseling\Conseling::select(
+            'category',
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('COUNT(id) as total')
+        )
+            ->whereYear('created_at', 2024)
+            ->groupBy('category', 'month')
+            ->orderBy('month', 'asc')
+            ->get();
+
+        $datas = [];
+        foreach ($conselings as $data) {
+            $category = $data->category;
+            $month    = $data->month;
+            $total    = $data->total;
+
+            // Inisialisasi array untuk setiap kategori jika belum ada
+            if (!isset($datas[$category])) {
+                $datas[$category] = array_fill(0, 12, null); // 12 bulan, mulai dari 0
+            }
+
+            // Masukkan data ke dalam array bulan
+            $datas[$category][$month - 1] = $total;
+        }
+
+        $results = [];
+        foreach ($datas as $category => $totals) {
+            $results[] = [
+                'name' => $category,
+                'data' => $totals
+            ];
+        }
+
+        return view("pages.report.conseling", compact("results"));
     }
 
     public function printConselings(Request $request)
@@ -300,7 +334,40 @@ class ReportController extends Controller
 
     public function indexConselingsGroup()
     {
-        return view("pages.report.conseling-group");
+        $conselings = \App\Models\Conseling\ConselingGroup::select(
+            'category',
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('COUNT(id) as total')
+        )
+            ->whereYear('created_at', 2024)
+            ->groupBy('category', 'month')
+            ->orderBy('month', 'asc')
+            ->get();
+
+        $datas = [];
+        foreach ($conselings as $data) {
+            $category = $data->category;
+            $month    = $data->month;
+            $total    = $data->total;
+
+            // Inisialisasi array untuk setiap kategori jika belum ada
+            if (!isset($datas[$category])) {
+                $datas[$category] = array_fill(0, 12, null); // 12 bulan, mulai dari 0
+            }
+
+            // Masukkan data ke dalam array bulan
+            $datas[$category][$month - 1] = $total;
+        }
+
+        $results = [];
+        foreach ($datas as $category => $totals) {
+            $results[] = [
+                'name' => $category,
+                'data' => $totals
+            ];
+        }
+
+        return view("pages.report.conseling-group", compact("results"));
     }
 
     public function printConselingsGroup(Request $request)
