@@ -19,7 +19,34 @@ class ReportController extends Controller
 
     public function indexAbsents()
     {
-        return view("pages.report.absent");
+        $absents = \App\Models\Absent::selectRaw('YEAR(violation_date) as year, MONTH(violation_date) as month, COUNT(*) as total')
+            ->groupBy('year', 'month')
+            ->orderBy('year', 'desc')
+            ->get();
+
+        $datas = [];
+        foreach ($absents as $rekap) {
+            $year  = $rekap['year'];
+            $month = $rekap['month'];
+            $total = $rekap['total'];
+
+            // Inisialisasi array untuk setiap tahun jika belum ada
+            if (!isset($datas[$year])) {
+                $datas[$year] = array_fill(0, 12, null);
+            }
+
+            // Isi array bulan sesuai dengan datanya
+            $datas[$year][$month - 1] = $total;
+        }
+
+        foreach ($datas as $year => $totals) {
+            $results[] = [
+                'name' => (string) $year,
+                'data' => $totals
+            ];
+        }
+
+        return view("pages.report.absent", compact("results"));
     }
 
     public function printAbsents(Request $request)
