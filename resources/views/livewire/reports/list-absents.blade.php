@@ -21,6 +21,10 @@
             </div>
         </div>
     </div>
+    <div class="w-full">
+        <x-basic-label title="Cari" />
+        <input type="search" wire:model.live.debounce.400ms="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" placeholder="Search...">
+    </div>
     <div wire:loading class="w-full gap-3 p-4 border border-gray-100 shadow rounded-md mb-2">
         <div class="flex justify-center">
             <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin fill-green-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
