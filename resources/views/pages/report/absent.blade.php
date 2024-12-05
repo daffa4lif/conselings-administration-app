@@ -7,8 +7,13 @@
     @include('includes.alert')
 </header>
 
-<section>
-    <div id="chart"></div>
+<section class="mb-5">
+    <div class="grid grid-cols-1 md:grid-cols-2">
+      <div class="w-full flex justify-center items-center">
+        <div id="chart-rekap-all-type"></div>
+      </div>
+      <div id="chart-rekap-tahun"></div>
+    </div>
 </section>
 
 <section class="w-full p-4 border border-gray-100 shadow rounded-lg">
@@ -20,32 +25,81 @@
 @push('script')
 <script>
 var options = {
-    series: @json($results),
-    chart: {
-        height: 350,
-        type: 'line',
-        zoom: {
-            enabled: false
-        }
-    },
-    dataLabels: {
-        enabled: false
-    },
-    stroke: {
-        curve: 'straight'
-    },
-    grid: {
-        row: {
-        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-        opacity: 0.5
-        },
-    },
-    xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', "Nov", "Des"],
+  series: @json(array_values($rekaps)),
+  chart: {
+    width: 380,
+    type: 'pie',
+  },
+  labels: @json(array_keys($rekaps)),
+  responsive: [{
+    breakpoint: 480,
+    options: {
+      chart: {
+        width: 200
+      },
+      legend: {
+        position: 'bottom'
+      }
     }
+  }]
 };
 
-var chart = new ApexCharts(document.querySelector("#chart"), options);
+var chart = new ApexCharts(document.querySelector("#chart-rekap-all-type"), options);
 chart.render();
+</script>
+<script>
+var options = {
+    series: @json($results),
+    chart: {
+    type: 'bar',
+    height: 350,
+    stacked: true,
+  },
+  plotOptions: {
+    bar: {
+      horizontal: true,
+      dataLabels: {
+        total: {
+          enabled: true,
+          offsetX: 0,
+          style: {
+            fontSize: '13px',
+            fontWeight: 900
+          }
+        }
+      }
+    },
+  },
+  stroke: {
+    width: 1,
+    colors: ['#fff']
+  },
+  xaxis: {
+    categories: @json($categories)
+  },
+  yaxis: {
+    title: {
+      text: undefined
+    },
+  },
+  tooltip: {
+    y: {
+      formatter: function (val) {
+        return val + " kasus"
+      }
+    }
+  },
+  fill: {
+    opacity: 1
+  },
+  legend: {
+    position: 'top',
+    horizontalAlign: 'left',
+    offsetX: 40
+  }
+  };
+
+  var chart = new ApexCharts(document.querySelector("#chart-rekap-tahun"), options);
+  chart.render();
 </script>
 @endpush

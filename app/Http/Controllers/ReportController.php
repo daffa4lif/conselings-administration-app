@@ -19,35 +19,35 @@ class ReportController extends Controller
 
     public function indexAbsents()
     {
-        $absents = \App\Models\Absent::selectRaw('YEAR(violation_date) as year, MONTH(violation_date) as month, COUNT(*) as total')
-            ->groupBy('year', 'month')
+        $absents = \App\Models\Absent::selectRaw('YEAR(violation_date) as year, type, COUNT(*) as total')
+            ->groupBy('year', 'type')
             ->orderBy('year', 'desc')
             ->get();
 
+        $years = $absents->groupBy('year');
         $datas = [];
-        foreach ($absents as $rekap) {
-            $year  = $rekap['year'];
-            $month = $rekap['month'];
-            $total = $rekap['total'];
-
-            // Inisialisasi array untuk setiap tahun jika belum ada
-            if (!isset($datas[$year])) {
-                $datas[$year] = array_fill(0, 12, null);
+        foreach ($years as $year) {
+            foreach ($year as $item) {
+                $datas[$item->type][] = $item->total;
             }
-
-            // Isi array bulan sesuai dengan datanya
-            $datas[$year][$month - 1] = $total;
         }
 
         $results = [];
-        foreach ($datas as $year => $totals) {
+        foreach ($datas as $key => $value) {
             $results[] = [
-                'name' => (string) $year,
-                'data' => $totals
+                'name' => $key,
+                'data' => $datas[$key]
             ];
         }
 
-        return view("pages.report.absent", compact("results"));
+        $rekaps = [];
+        foreach ($results as $items) {
+            $rekaps[$items['name']] = array_sum($items['data']);
+        }
+
+        $categories = $years->keys()->toArray();
+
+        return view("pages.report.absent", compact("categories", "results", "rekaps"));
     }
 
     public function printAbsents(Request $request)
