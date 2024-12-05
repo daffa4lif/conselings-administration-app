@@ -16,10 +16,18 @@ class ListConselings extends Component
 
     public string $filterStatus = 'All';
 
+    public string $filterCategori = 'All';
+
     public $perPage = 10;
 
     public function render()
     {
+        $categories = [
+            ConselingGroup::CATEGORY_AKADEMIK,
+            ConselingGroup::CATEGORY_NON_AKADEMIK,
+            ConselingGroup::CATEGORY_KEDISIPLINAN
+        ];
+
         $conselings = ConselingGroup::with('students')
             ->when($this->search != '', function ($query) {
                 $query->whereHas('student', function ($query) {
@@ -30,6 +38,9 @@ class ListConselings extends Component
             ->when($this->filterStatus != 'All', function ($query) {
                 $query->where('status', $this->filterStatus);
             })
+            ->when($this->filterCategori != 'All', function ($query) {
+                $query->where('category', $this->filterCategori);
+            })
             ->when($this->filterOrder == 'new', function ($query) {
                 $query->orderByDesc('created_at');
             }, function ($query) {
@@ -37,6 +48,6 @@ class ListConselings extends Component
             })
             ->paginate($this->perPage);
 
-        return view('livewire.conseling-group.list-conselings', compact("conselings"));
+        return view('livewire.conseling-group.list-conselings', compact("conselings", "categories"));
     }
 }

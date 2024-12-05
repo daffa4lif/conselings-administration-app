@@ -2,11 +2,21 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-2">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <div class="w-full">
+                <x-basic-label title="Kategori" />
+                <select wire:model.live.debounce.400ms="filterCategori" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    <option value="All">Semua</option>
+                    @foreach ($categories as $item)
+                        <option value="{{ $item }}">{{ $item }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="w-full">
                 <x-basic-label title="Status" />
                 <select wire:model.live.debounce.400ms="filterStatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     <option value="All">Semua</option>
                     <option>PROCESS</option>
                     <option>FINISH</option>
+                    <option>DIALIHKAN</option>
                 </select>
             </div>
             <div class="w-full">
