@@ -29,7 +29,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware('permission:list home visit')->prefix("home-visits")->group(function () {
         Route::get('/', [HomeVisitController::class, 'index'])->name('home-visit.index');
-        Route::get('/{id}', [HomeVisitController::class, 'detail'])->name('home-visit.detail');
+        Route::get('/detail/{id}', [HomeVisitController::class, 'detail'])->name('home-visit.detail');
 
         Route::middleware('permission:crud home visit')->group(function () {
             Route::get('/create', [HomeVisitController::class, 'create'])->name('home-visit.create');
@@ -56,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware('permission:list classroom')->prefix('classroom')->group(function () {
         Route::get('/', [ClassroomController::class, 'index'])->name('classroom.index');
-        Route::get('/{id}', [ClassroomController::class, 'detail'])->name('classroom.detail');
+        Route::get('/detail/{id}', [ClassroomController::class, 'detail'])->name('classroom.detail');
 
         Route::middleware('permission:crud classroom')->group(function () {
             Route::post('/', [ClassroomController::class, 'createPost']);
@@ -71,7 +71,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware('permission:list classroom')->prefix('major')->group(function () {
         Route::get('/', [MajorController::class, 'index'])->name('major.index');
-        Route::get('/{id}', [MajorController::class, 'detail'])->name('major.detail');
+        Route::get('/detail/{id}', [MajorController::class, 'detail'])->name('major.detail');
 
         Route::middleware('permission:crud classroom')->group(function () {
             Route::post('/', [MajorController::class, 'createPost']);
@@ -99,7 +99,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware('permission:list cases')->prefix('cases')->group(function () {
         Route::get('/', [CaseController::class, 'index'])->name('case.index');
-        Route::get('/{id}', [CaseController::class, 'detail'])->name('case.detail');
+        Route::get('/detail/{id}', [CaseController::class, 'detail'])->name('case.detail');
 
         Route::middleware('permission:crud cases')->group(function () {
             Route::get('/create', [CaseController::class, 'create'])->name('case.create');
@@ -113,7 +113,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware('permission:list conseling')->prefix("conselings")->group(function () {
         Route::get('/', [ConselingController::class, 'index'])->name('conseling.index');
-        Route::get('/{id}', [ConselingController::class, 'detail'])->name('conseling.detail');
+        Route::get('/detail/{id}', [ConselingController::class, 'detail'])->name('conseling.detail');
 
         Route::middleware('permission:crud conseling')->group(function () {
             Route::get('/create', [ConselingController::class, 'create'])->name('conseling.create');
@@ -127,7 +127,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware('permission:list conseling')->prefix("conselings-group")->group(function () {
         Route::get('/', [ConselingGrupController::class, 'index'])->name('conseling-group.index');
-        Route::get('/{id}', [ConselingGrupController::class, 'detail'])->name('conseling-group.detail');
+        Route::get('/detail/{id}', [ConselingGrupController::class, 'detail'])->name('conseling-group.detail');
 
         Route::middleware('permission:crud conseling')->group(function () {
             Route::get('/create', [ConselingGrupController::class, 'create'])->name('conseling-group.create');
@@ -175,7 +175,7 @@ Route::middleware(['auth'])->group(function () {
                     Route::get('/create', [UserController::class, 'create'])->name('master.user.create');
                     Route::post('/create', [UserController::class, 'createPost']);
 
-                    Route::get('/{id}', [UserController::class, 'detail'])->name('master.user.detail');
+                    Route::get('/detail/{id}', [UserController::class, 'detail'])->name('master.user.detail');
                     Route::post('/{id}', [UserController::class, 'detailPost']);
 
                     Route::get('/{id}/delete', [UserController::class, 'delete'])->name('master.user.delete');
