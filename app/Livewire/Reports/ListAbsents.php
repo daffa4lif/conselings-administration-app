@@ -12,9 +12,12 @@ class ListAbsents extends Component
     use \Livewire\WithPagination;
 
     protected $queryString = [
+        'search' => ['except' => ''],
         'filterType' => ['except' => ''],
         'filterYear' => ['except' => '']
     ];
+
+    public string $search = '';
 
     public string $filterYear;
 
@@ -35,6 +38,12 @@ class ListAbsents extends Component
         $absents = Absent::with('student')
             ->when($this->filterType != 'All', function ($query) {
                 $query->where('type', $this->filterType);
+            })
+            ->when($this->search != '', function ($query) {
+                $query->whereHas('student', function ($query) {
+                    $query->where('name', 'like', "%$this->search%")
+                        ->orWhere('nis', 'like', "%$this->search%");
+                });
             })
             ->whereYear('violation_date', $this->filterYear ?? current($years))
             ->paginate($this->perPage);

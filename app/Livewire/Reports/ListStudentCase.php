@@ -11,10 +11,13 @@ class ListStudentCase extends Component
     use \Livewire\WithPagination;
 
     protected $queryString = [
+        'search' => ['except' => ''],
         'filterType' => ['except' => ''],
         'filterStatus' => ['except' => ''],
         'filterYear' => ['except' => '']
     ];
+
+    public string $search = '';
 
     public string $filterYear;
 
@@ -40,6 +43,12 @@ class ListStudentCase extends Component
             })
             ->when($this->filterStatus != 'All', function ($query) {
                 $query->where('status', $this->filterStatus);
+            })
+            ->when($this->search != '', function ($query) {
+                $query->whereHas('student', function ($query) {
+                    $query->where('name', 'like', "%$this->search%")
+                        ->orWhere('nis', 'like', "%$this->search%");
+                });
             })
             ->whereYear('created_at', $this->filterYear ?? current($years))
             ->paginate($this->perPage);
