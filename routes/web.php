@@ -34,22 +34,22 @@ Route::middleware(['auth'])->group(function () {
         Route::middleware('permission:crud home visit')->group(function () {
             Route::get('/create', [HomeVisitController::class, 'create'])->name('home-visit.create');
             Route::post('/create', [HomeVisitController::class, 'createPost']);
-            Route::post('/{id}', [HomeVisitController::class, 'detailPost']);
+            Route::post('/detail/{id}', [HomeVisitController::class, 'detailPost']);
             Route::get('/{id}/delete', [HomeVisitController::class, 'delete'])->name('home-visit.delete');
         });
     });
 
     Route::middleware('permission:list student')->prefix('students')->group(function () {
         Route::get('/', [StudentController::class, 'index'])->name('student.index');
-        Route::get('/{nis}', [StudentController::class, 'detail'])->name('student.detail');
+        Route::get('/detail/{nis}', [StudentController::class, 'detail'])->name('student.detail');
 
         Route::middleware('permission:crud student')->group(function () {
             Route::get('/create', [StudentController::class, 'create'])->name('student.create');
             Route::post('/create', [StudentController::class, 'createPost']);
             Route::get('/upload', [StudentController::class, 'upload'])->name('student.upload');
             Route::post('/upload', [StudentController::class, 'uploadPost']);
-            Route::post('/{nis}', [StudentController::class, 'detailPost']);
-            Route::post('/{nis}/new-classroom', [StudentController::class, 'createNewClassroomPost'])->name('student.create-new-classroom');
+            Route::post('/detail/{nis}', [StudentController::class, 'detailPost']);
+            Route::post('/detail/{nis}/new-classroom', [StudentController::class, 'createNewClassroomPost'])->name('student.create-new-classroom');
             Route::get('/delete-classroom/{id_student}/{id_class}/{year}', [StudentController::class, 'deleteClassroom'])->name('student.delete-classroom');
         });
     });
@@ -60,10 +60,10 @@ Route::middleware(['auth'])->group(function () {
 
         Route::middleware('permission:crud classroom')->group(function () {
             Route::post('/', [ClassroomController::class, 'createPost']);
-            Route::post('/{id}', [ClassroomController::class, 'detailPost']);
+            Route::post('/detail/{id}', [ClassroomController::class, 'detailPost']);
 
-            Route::get('/{id}/upload-students', [ClassroomController::class, 'registerStudentByUpload'])->name('classroom.upload');
-            Route::post('/{id}/upload-students', [ClassroomController::class, 'registerStudentByUploadPost']);
+            Route::get('/detail/{id}/upload-students', [ClassroomController::class, 'registerStudentByUpload'])->name('classroom.upload');
+            Route::post('/detail/{id}/upload-students', [ClassroomController::class, 'registerStudentByUploadPost']);
 
             Route::get('delete/{id}', [ClassroomController::class, 'delete'])->name('classroom.delete');
         });
@@ -75,14 +75,14 @@ Route::middleware(['auth'])->group(function () {
 
         Route::middleware('permission:crud classroom')->group(function () {
             Route::post('/', [MajorController::class, 'createPost']);
-            Route::post('/{id}', [MajorController::class, 'detailPost']);
+            Route::post('/detail/{id}', [MajorController::class, 'detailPost']);
             Route::get('/{id}/delete', [MajorController::class, 'delete'])->name('major.delete');
         });
     });
 
     Route::middleware('permission:list absent')->prefix("absents")->group(function () {
         Route::get("/", [AbsentController::class, "index"])->name("absent.index");
-        Route::get("/{id}", [AbsentController::class, "detail"])->name("absent.detail");
+        Route::get("/detail/{id}", [AbsentController::class, "detail"])->name("absent.detail");
 
         Route::middleware('permission:crud absent')->group(function () {
             Route::get("/create", [AbsentController::class, "create"])->name("absent.create");
@@ -91,7 +91,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get("/upload", [AbsentController::class, "upload"])->name("absent.upload");
             Route::post("/upload", [AbsentController::class, "uploadPost"]);
 
-            Route::post("/{id}", [AbsentController::class, "detailPost"]);
+            Route::post("/detail/{id}", [AbsentController::class, "detailPost"]);
 
             Route::get("/{id}/delete", [AbsentController::class, "delete"])->name("absent.delete");
         });
@@ -105,7 +105,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/create', [CaseController::class, 'create'])->name('case.create');
             Route::post('/create', [CaseController::class, 'createPost']);
 
-            Route::post('/{id}', [CaseController::class, 'DetailPost']);
+            Route::post('/detail/{id}', [CaseController::class, 'DetailPost']);
 
             Route::get('/{id}/delete', [CaseController::class, 'delete'])->name('case.delete');
         });
@@ -119,7 +119,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/create', [ConselingController::class, 'create'])->name('conseling.create');
             Route::post('/create', [ConselingController::class, 'createPost']);
 
-            Route::post('/{id}', [ConselingController::class, 'detailPost']);
+            Route::post('/detail/{id}', [ConselingController::class, 'detailPost']);
 
             Route::get('/{id}/delete', [ConselingController::class, 'delete'])->name('conseling.delete');
         });
@@ -133,7 +133,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/create', [ConselingGrupController::class, 'create'])->name('conseling-group.create');
             Route::post('/create', [ConselingGrupController::class, 'createPost']);
 
-            Route::post('/{id}', [ConselingGrupController::class, 'detailPost']);
+            Route::post('/detail/{id}', [ConselingGrupController::class, 'detailPost']);
 
             Route::get('/{id}/delete', [ConselingGrupController::class, 'delete'])->name('conseling-group.delete');
         });
@@ -176,7 +176,7 @@ Route::middleware(['auth'])->group(function () {
                     Route::post('/create', [UserController::class, 'createPost']);
 
                     Route::get('/detail/{id}', [UserController::class, 'detail'])->name('master.user.detail');
-                    Route::post('/{id}', [UserController::class, 'detailPost']);
+                    Route::post('/detail/{id}', [UserController::class, 'detailPost']);
 
                     Route::get('/{id}/delete', [UserController::class, 'delete'])->name('master.user.delete');
                 });
