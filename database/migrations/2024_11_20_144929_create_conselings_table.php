@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId('student_id');
             $table->string("category");
             $table->string('case');
-            $table->enum('status', ['PROCESS', 'FINISH']);
+            $table->string('status');
             $table->text('solution')->nullable();
             $table->foreignId('user_id');
             $table->timestamps();

@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('case');
             $table->string('type');
             $table->integer('point');
-            $table->enum('status', ['PROCESS', 'FINISH']);
+            $table->string('status');
             $table->text('solution')->nullable();
             $table->timestamps();
         });
